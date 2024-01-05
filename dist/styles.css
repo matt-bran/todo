@@ -1,0 +1,287 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /*background-color: #111111;*/
+    background-color: black;
+    font-size: 16px;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header#page-head {
+    background-color: #202124;
+    color: white;
+    padding: 1rem;
+    margin-top: 5px;
+    border-top: 1px solid rgb(100, 100, 100);
+    border-bottom: 1px solid rgb(100, 100, 100);
+}
+
+#content {
+    flex-grow: 1;
+    display: flex;
+
+}
+
+/* menu styles */
+
+#content #menu {
+    background-color: #202124;
+    flex-grow: 1;
+    color: white;
+    margin: 1rem 0.5rem 1rem 0.5rem;
+    padding: 1rem;
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 5px;
+    max-width: 30rem;
+}
+
+#menu-header {
+    display: flex; 
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+#menu div h2 {
+    margin-left: 1rem;
+}
+
+#add-list {
+    display: flex;
+}
+
+#menu #add-list input {
+    background-color: #151618;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+} 
+
+#content #list-content {
+    flex-grow: 4;
+}
+
+#menu ul {
+    max-width: 27rem;
+    background: rgb(100, 100, 100);
+    border-radius: 5px;
+    margin-top: 1rem;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    list-style-type: none;
+}
+
+#menu ul li {
+    font-size: 1.125rem;
+    padding: 0.75rem;
+    margin-bottom: 0.625rem;
+    border-radius: 5px;
+}
+
+#menu ul li.active {
+    background-color: #202124;
+    color: white;
+}
+
+#menu ul li.not-active {
+    background-color: none;
+    font-weight: normal;
+    transition: 0.3s;
+}
+
+#menu ul li.not-active:hover {
+    background-color: #202124;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+/* list content styles */
+
+#content-header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 2rem 3rem 2rem 3rem;
+}
+
+#list-title {
+    display: flex;
+}
+
+#content-header #list-title h2 {
+    color: white;
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    align-self: center;
+}
+
+#content-btns {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 3rem 0 3rem;
+}
+
+#content-btns button {
+    font-size: 1rem;
+    border-radius: 20px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border: none;
+    background-color: #202124;
+    color: white;
+    transition: 0.2s;
+}
+
+#content-btns button:hover {
+    background-color: white;
+    color: black;
+    transition: 0.2s;
+}
+
+/* overlay */
+#overlay {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+#overlay-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #202124;
+    padding: 10px;
+    border: 1px solid #888;
+    width: 30rem;
+    height: 30rem;
+    border-radius: 12px;
+    color: white;
+}
+
+.form legend {
+    text-align: center;
+    font-size: 2rem;
+}
+
+
+.form .input-field {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.form .input-field label {
+    margin-bottom: 0.5rem;
+}
+
+.form .input-field input, .form .input-field select, .form .input-field textarea{
+    background-color: #151618;
+    border: none;
+    color: white;
+    color-scheme: dark;
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.form .input-field textarea {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+}
+
+.form .input-field select {
+    appearance: none;
+}
+
+.form #submit {
+    display: flex;
+    justify-content: center;
+}
+
+#submit button {
+    font-size: 1rem;
+    border-radius: 20px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border: none;
+    background-color: white;
+    color: black;
+    transition: 0.2s;
+    margin: 2rem 0 1rem 0;
+}
+
+#submit button:hover {
+    background: #151618;
+    color: white;
+    transition: 0.3s;
+} 
+
+/* svgs */
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.material-symbols-outlined.add-circle {
+    font-size: 2rem;
+    color: rgb(100, 100, 100);
+    transition: 0.3s;
+}
+
+.material-symbols-outlined.add-circle:hover {
+    color: white;
+    transition: 0.3s;
+}
+
+.material-symbols-outlined.list-svg {
+    font-size: 2.5rem;
+    color:white;
+}
+.material-symbols-outlined.add {
+    font-size: 2rem;
+    color: rgb(100, 100, 100);
+    margin-left: 0.5rem;
+    transition: 0.3s;
+}
+
+.material-symbols-outlined.add:hover {
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.material-symbols-outlined.vital {
+    color: #202124;
+    font-size: 16rem;
+    position: relative;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.material-symbols-outlined.close {
+    font-size: 1.75rem;
+    color:#888;
+}
+
+.material-symbols-outlined.close:hover {
+    font-size: 1.75rem;
+    color: white;
+    cursor: pointer;
+}
+
+.not-active-svg {
+    display: none;
+}
