@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Buddy</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="./styles.css"/>
+    <script defer src="https://friconix.com/cdn/friconix.js"> </script>
+    <script defer src="main.js"></script>
+</head>
+<body>
+    <header id="page-head">
+        <h1>Task Buddy</h1>
+    </header>
+    <div id="content">
+        <div id="menu">
+            <div id="menu-header">
+                <i class="fi-xwsuxl-folder-solid"></i>
+                <h2>Lists</h2>
+            </div>
+            <div id="add-list">
+                <input placeholder="Create a task list..."/>
+                <span class="material-symbols-outlined add">
+                    add
+                </span>
+            </div>
+            <ul id="menu-list">
+
+            </ul>
+        </div>
+        <div id="list-content">
+            <header id = "content-header">
+                <div id="list-title">
+                    <span class="material-symbols-outlined list-svg">
+                        list
+                    </span>
+                    <h2 id="content-header-title"></h2>
+                </div>
+                <p id="task-counter"></p>
+            </header>
+            <ul id="tasks"></ul>
+            <div id="content-btns">
+                <span id="add-task" class="material-symbols-outlined add-circle">
+                    add_circle
+                </span>
+                <button>Clear completed tasks</button>
+            </div>
+            <span class="material-symbols-outlined vital active-svg">
+                vital_signs
+            </span>
+        </div>
+    </div>
+    <div id="overlay">
+        <div id="overlay-content">
+            <form class="form" id="new-task-form">
+                <div style="display: flex; justify-content: flex-end;">
+                    <span id="close-btn" class="material-symbols-outlined close">
+                        close
+                    </span>
+                </div>
+                <legend>New Task</legend>
+                <div class="input-field">
+                    <label for="title">Title</label>
+                    <input placeholder="Title..." type="text" name="title" id="title" required>
+                </div>
+                <div class="input-field">
+                    <label for="duedate">Due Date</label>
+                    <input type="date" name="duedate" id="duedate">
+                </div>
+                <div class="input-field">
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="desc">Description</label>
+                    <textarea placeholder="Description..." type="text" rows="3" cols="50" name="desc" id="desc" style="resize: none;"></textarea>
+                </div>
+                <div id="submit">
+                    <button id = "submit-btn" type="submit">Create task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
