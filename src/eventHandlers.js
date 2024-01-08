@@ -1,10 +1,13 @@
 import { hideAddListForm, showAddListForm, showOverlay, 
-        updateListMenu, updateTaskContent, updateActiveMenuListItem, hideOverlay, closeAndSubmitOverlay, toggleTaskDesc } from "./domManipulation";
+        updateListMenu, updateTaskContent, updateActiveMenuListItem, hideOverlay, 
+        closeAndSubmitOverlay, toggleTaskDesc } from "./domManipulation";
 
 export const eventHandlers = {
     handleAddList: () => {
         const add_list = document.getElementById('add-list');
-        add_list.addEventListener('click', () => { showAddListForm(add_list) });
+        add_list.addEventListener('click', () => { 
+            showAddListForm(add_list) 
+        });
     },
     handleSubmitNewListForm: () => {
         document.getElementById('new-list-form').addEventListener('submit', (e) => {
@@ -14,7 +17,9 @@ export const eventHandlers = {
     },
     handleCancelNewListForm: () => {
         const cancel_list = document.getElementById('cancel-list');
-        cancel_list.addEventListener('click', () => { hideAddListForm(cancel_list) });
+        cancel_list.addEventListener('click', () => { 
+            hideAddListForm(cancel_list) 
+        });
     },
     handleMenuListEvents: () => {
         const menu_list = document.getElementById('menu-list');
@@ -26,10 +31,14 @@ export const eventHandlers = {
         });
     },
     handleAddNewTaskEvent: () => {
-        document.getElementById('add-task').addEventListener('click', () => { showOverlay();});
+        document.getElementById('add-task').addEventListener('click', () => { 
+            showOverlay();
+        });
     },
     handleCloseNewTaskEvent: () => {
-        document.getElementById('close-btn').addEventListener('click', () => { hideOverlay(); });
+        document.getElementById('close-btn').addEventListener('click', () => { 
+            hideOverlay(); 
+        });
     },
     handleSubmitNewTaskEvent: () => {
         const form = document.getElementById('new-task-form');

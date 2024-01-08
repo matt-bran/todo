@@ -75,31 +75,34 @@ export function updateTaskContent(list_title) {
     ul_tasks.innerHTML = '';
     document.getElementById('content-header-title').textContent = list.getTitle();
     for (let i = 0; i < list.getSize(); i++) { 
-        const li = createDOMElement('li', { class: 'item'});       
-        const li_top = createDOMElement('div', {class: 'li-top'});
-        const task_right = createDOMElement('div', {class: "task-right"});
-        const task_left = createDOMElement('div', {class: "task-left"});
-        const p_title = createDOMElement('p', {}, list.getElementAt(i).getTitle());
-        const desc = createDOMElement('p', { class: 'desc hidden' }, list.getElementAt(i).getDescription());
-        const svg_sq = createDOMElement('span', { class: "material-symbols-outlined square" }, 'edit_square');
-        const svg_expand = createDOMElement('span', { class: "material-symbols-outlined expand" }, 'expand_more');
-
-        const date = list.getElementAt(i).getDueDate();
-        if (!isEqual(date, new Date(0))) {
-            const date_to_str = "due " + format(date, 'MM/dd/yyyy');
-            task_right.appendChild(createDOMElement('p', { class: 'task-date'}, date_to_str));
-        }
-        const priority = list.getElementAt(i).getPriority();
-        const p_priority = createDOMElement('p', { class: priority}, priority)
-
-        task_left.appendChild(svg_expand);
-        task_left.appendChild(p_title);
-        task_right.appendChild(p_priority);
-        task_right.appendChild(svg_sq);
-        li_top.appendChild(task_left);
-        li_top.appendChild(task_right);
-        li.appendChild(li_top);
-        li.appendChild(desc);
+        const li = createListItem(list.getElementAt(i));
         ul_tasks.appendChild(li);
     }
+}
+
+function createListItem(task) {
+    const li = createDOMElement('li', { class: 'item'});       
+    const li_top = createDOMElement('div', {class: 'li-top'});
+    const task_right = createDOMElement('div', {class: "task-right"});
+    const task_left = createDOMElement('div', {class: "task-left"});
+    const p_title = createDOMElement('p', {}, task.getTitle());
+    const desc = createDOMElement('p', { class: 'desc hidden' }, task.getDescription());
+    const svg_sq = createDOMElement('span', { class: "material-symbols-outlined square" }, 'edit_square');
+    const svg_expand = createDOMElement('span', { class: "material-symbols-outlined expand" }, 'expand_more');
+    const date = task.getDueDate();
+    if (!isEqual(date, new Date(0))) {
+        const date_to_str = "due " + format(date, 'MM/dd/yyyy');
+        task_right.appendChild(createDOMElement('p', { class: 'task-date'}, date_to_str));
+    }
+    const priority = task.getPriority();
+    const p_priority = createDOMElement('p', { class: priority}, priority)
+    task_left.appendChild(svg_expand);
+    task_left.appendChild(p_title);
+    task_right.appendChild(p_priority);
+    task_right.appendChild(svg_sq);
+    li_top.appendChild(task_left);
+    li_top.appendChild(task_right);
+    li.appendChild(li_top);
+    li.appendChild(desc);
+    return li;
 }
