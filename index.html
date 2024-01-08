@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Buddy</title>
+    <title>Task Manager</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="./styles.css"/>
     <script defer src="https://friconix.com/cdn/friconix.js"> </script>
@@ -11,22 +11,49 @@
 </head>
 <body>
     <header id="page-head">
-        <h1>Task Buddy</h1>
+        <h1>Task Manager</h1>
     </header>
     <div id="content">
         <div id="menu">
-            <div id="menu-header">
+            <div id = "today"  class="cal">
+                <span class="material-symbols-outlined today">
+                    today
+                </span>
+                <h3>Today</h3>
+            </div>
+            <div id = "week" class="cal">
+                <span class="material-symbols-outlined week">
+                    date_range
+                </span>
+                <h3>This week</h3>
+            </div>
+            <div id="lists-header">
                 <i class="fi-xwsuxl-folder-solid"></i>
                 <h2>Lists</h2>
             </div>
+            <ul id="menu-list">
+            </ul>
             <div id="add-list">
-                <input placeholder="Create a task list..."/>
                 <span class="material-symbols-outlined add">
                     add
                 </span>
+                <p>Add list</p>
             </div>
-            <ul id="menu-list">
-            </ul>
+            <form id = "new-list-form" class="hidden">
+                <input placeholder="Enter listname..." type='text' name='new-list-title' id='new-list-title' required/>
+                <div id = "form-btns">
+                    <button type="submit">
+                        <span class="material-symbols-outlined done">
+                            done
+                        </span>
+                    </button>
+                    <button id = "cancel-list" type="reset">
+                        <span class="material-symbols-outlined add-close">
+                            close
+                        </span>
+                    </button>
+                </div>
+            </form>
         </div>
         <div id="list-content">
             <header id = "content-header">
@@ -45,9 +72,6 @@
                 <button>Clear completed tasks</button>
             </div>
             <ul id="tasks"></ul>
-            <span class="material-symbols-outlined vital active-svg">
-                vital_signs
-            </span>
         </div>
     </div>
     <div id="overlay">

@@ -38,13 +38,26 @@ header#page-head {
     padding: 1rem;
     border: 1px solid rgb(100, 100, 100);
     border-radius: 5px;
-    max-width: 30rem;
+    max-width: 25rem;
 }
 
-#menu-header {
+#lists-header {
+    display: flex; 
+    justify-content: flex-start;
+}
+
+#menu .cal {
     display: flex; 
     justify-content: flex-start;
     margin-bottom: 1rem;
+    padding: 0.625rem 0.5rem 0.625rem 0.5rem;
+    transition: 0.2s;
+    border-radius: 10px;
+}
+
+#menu .cal:hover {
+    background: #575757;
+    transition: 0.2s;
 }
 
 #menu div h2 {
@@ -53,27 +66,61 @@ header#page-head {
 
 #add-list {
     display: flex;
+    color: rgb(100, 100, 100);
+    transition: 0.2s;
 }
 
-#menu #add-list input {
+#add-list:hover {
+    color: white;
+    transition: 0.2s;
+}
+
+
+#menu #add-list p {
+    font-size: 1.5rem;
+    border: none;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    align-self: center;
+}
+
+#menu form {
+    display: flex;
+    margin-left:0.5rem;
+}
+
+#menu form input {
+    flex-grow: 1;
     background-color: #151618;
     color: white;
     border: none;
     font-size: 1rem;
     padding: 0.5rem;
     border-radius: 5px;
-} 
+}
 
-#content #list-content {
-    flex-grow: 4;
+#menu form div#form-btns {
+    display: flex;
+    position: relative;
+    font-size: 2rem;
+    right: 3.5rem;
+}
+
+#menu form div#form-btns button {
+    background: none;
+    border: none;
+}
+
+#menu form div#form-btns span {
+    align-self: center;
+}
+
+#menu form div#form-btns span:hover {
+    color:white;
 }
 
 #menu ul {
-    max-width: 27rem;
-    background: rgb(100, 100, 100);
-    border-radius: 5px;
-    margin-top: 1rem;
-    padding: 1rem 0.5rem 1rem 0.5rem;
+    padding-top: 0.5rem;
     list-style-type: none;
 }
 
@@ -81,28 +128,24 @@ header#page-head {
     font-size: 1.125rem;
     padding: 0.75rem;
     margin-bottom: 0.625rem;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 #menu ul li.active {
-    background-color: #202124;
-    color: white;
+    background-color: #575757;
 }
 
-#menu ul li.not-active {
-    background-color: none;
-    font-weight: normal;
+#menu ul li:hover {
+    background-color: #575757;
     transition: 0.3s;
-}
-
-#menu ul li.not-active:hover {
-    background-color: #202124;
-    color: white;
-    transition: 0.3s;
-    cursor: pointer;
 }
 
 /* list content styles */
+
+#content #list-content {
+    flex-grow: 4;
+    max-width: 70%;
+}
 
 #content-header {
     display: flex;
@@ -161,8 +204,8 @@ li .task-right p {
     align-self: center;
 }
 
-li .hidden-desc {
-    display: none;
+.hidden {
+    display: none !important;
 }
 
 li .desc {
@@ -285,6 +328,16 @@ li .desc {
   'opsz' 24
 }
 
+.material-symbols-outlined.done {
+    color: #888;
+}
+
+.material-symbols-outlined.today, .material-symbols-outlined.week {
+    font-size: 1.5rem;
+    color:white;
+    margin-right: 0.625rem;
+}
+
 .material-symbols-outlined.expand {
     font-size: 2rem;
     color: #888;
@@ -333,17 +386,10 @@ li .desc {
     font-size: 2.5rem;
     color:white;
 }
-.material-symbols-outlined.add {
-    font-size: 2rem;
-    color: rgb(100, 100, 100);
-    margin-left: 0.5rem;
-    transition: 0.3s;
-}
 
-.material-symbols-outlined.add:hover {
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
+.material-symbols-outlined.add {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
 }
 
 .material-symbols-outlined.vital {
@@ -364,6 +410,10 @@ li .desc {
     font-size: 1.75rem;
     color: white;
     cursor: pointer;
+}
+
+.material-symbols-outlined.add-close {
+    color: #888;
 }
 
 .not-active-svg {
