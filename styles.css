@@ -34,10 +34,9 @@ header#page-head {
     background-color: #202124;
     flex-grow: 1;
     color: white;
-    margin: 1rem 0.5rem 1rem 0.5rem;
+    margin-right: 0.5rem;
     padding: 1rem;
-    border: 1px solid rgb(100, 100, 100);
-    border-radius: 5px;
+    border-right: 1px solid rgb(100, 100, 100);
     max-width: 25rem;
 }
 
@@ -202,6 +201,18 @@ li .task-right p {
     font-size: 1rem;
     color: #888;
     align-self: center;
+}
+
+.task-right p.low {
+    color: #888;
+}
+
+.task-right p.medium {
+    color: #0baeb9;
+}
+
+.task-right p.high {
+    color: #b84646;
 }
 
 .hidden {
