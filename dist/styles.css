@@ -173,20 +173,32 @@ ul#tasks > li {
     flex-direction: column;
     background-color: #202124;
     border: 1px solid#888;
+    border-radius: 5px;
     color: white;
     font-size: 1.25rem;
     padding: 0.625rem;
     margin-bottom: 1rem;
     transition: 0.3s;
+    pointer-events: auto;
+    position: relative;
+}
+ul#tasks li:hover {
+    border: 1px solid rgb(199, 199, 199);
+    transition: 0.2s;
 }
 
 li .li-top {
     display: flex;
     justify-content: space-between;
+    pointer-events: none;
 }
 
 li .li-top > * {
     display: flex;
+}
+
+.task-left, .task-right {
+    pointer-events: none;
 }
 
 li .task-right > * {
@@ -195,6 +207,7 @@ li .task-right > * {
 
 li .task-left p {
     align-self: center;
+    pointer-events: none;
 }
 
 li .task-right p {
@@ -224,6 +237,7 @@ li .desc {
     margin: 1rem 1rem 1rem 1rem;
     border-top: 1px solid #888;
     font-size: 1rem;
+    pointer-events: none;
 }
 
 #content-btns {
@@ -246,6 +260,17 @@ li .desc {
     background-color: white;
     color: black;
     transition: 0.2s;
+}
+
+.strikethrough::after {
+    position: absolute;
+    left: 2.25rem;
+    top: 1.4375rem;
+    height: 1px;
+    background: rgb(221, 221, 221);
+    content: "";
+    width: calc(100% - 8.5rem);
+    display: block;
 }
 
 /* overlay */
@@ -349,23 +374,17 @@ li .desc {
     margin-right: 0.625rem;
 }
 
-.material-symbols-outlined.expand {
-    font-size: 2rem;
+.material-symbols-outlined.radio {
+    font-size: 1.25rem;
+    align-self: center;
     color: #888;
-    transition: 0.3s;
-    transform: rotate(-90deg);
-    margin-right: 0.5rem;
+    margin-right: 0.75rem;
+    pointer-events: auto;
 }
 
-.material-symbols-outlined.expand.open{
-    transition: 0.3s;
-    transform: rotate(0deg);
-}
-
-.material-symbols-outlined.expand:hover{
+.material-symbols-outlined.radio:hover{
     transition: 0.3s;
     color: white;
-    cursor: pointer;
 }
 
 .material-symbols-outlined.square, .material-symbols-outlined.delete {
@@ -373,6 +392,7 @@ li .desc {
     color: #888;
     transition: 0.3s;
     align-self: center;
+    pointer-events: auto;
 }
 
 .material-symbols-outlined.square:hover, .material-symbols-outlined.delete:hover {

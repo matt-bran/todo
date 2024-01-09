@@ -1,6 +1,6 @@
 import { hideAddListForm, showAddListForm, removeTaskFromList, showAddTaskOverlay, showEditTaskOverlay,
         updateListMenu, updateTaskContent, updateActiveMenuListItem, hideOverlay, 
-        closeAndSubmitOverlay, toggleTaskDesc } from "./domManipulation";
+        closeAndSubmitOverlay, toggleTaskDesc, toggleTaskCompletion } from "./domManipulation";
 
 export const eventHandlers = {
     handleAddList: () => {
@@ -25,8 +25,8 @@ export const eventHandlers = {
         const menu_list = document.getElementById('menu-list');
         menu_list.addEventListener('click', (e) => {
             if (e.target && e.target.matches('li')) {
-                updateTaskContent(e.target.textContent);
                 updateActiveMenuListItem(menu_list, e.target);
+                updateTaskContent(e.target.textContent);
             }
         });
     },
@@ -49,7 +49,7 @@ export const eventHandlers = {
     },
     handlClickTaskEvents: () => {
         document.getElementById('tasks').addEventListener('click', (e) => {
-            if (e.target && e.target.matches("span.expand")) {
+            if (e.target && e.target.matches("li.item")) {
                 toggleTaskDesc(e.target);
             }
             else if (e.target && e.target.matches("span.square")) {
@@ -59,6 +59,9 @@ export const eventHandlers = {
             else if (e.target && e.target.matches("span.delete")) {
                 const task_title = e.target.parentElement.previousSibling.children.item(1);
                 removeTaskFromList(task_title);
+            }
+            else if (e.target && e.target.matches("span.radio")) {
+                toggleTaskCompletion(e.target);
             }
         });
     },

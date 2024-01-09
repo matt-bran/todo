@@ -19,11 +19,7 @@ const task = (title, description, dueDate, priority) => {
     const setPriority = (new_priority) => { task_priority = new_priority };
     
     const toggleisComplete = () => {
-        if (isComplete == false) {
-            isComplete = true;
-        } else {
-            isComplete = false;
-        }
+        isComplete = !isComplete;
     };
 
     return { getTitle, getDescription, getDueDate, getPriority, setTitle, 
@@ -92,6 +88,10 @@ const taskList = (title) => {
         return -1;
     };
 
+    const getIsCompleteAt = (index) => {
+        return tasks[index].getisComplete();
+    }
+
     const setTitleAt = (index, new_title) => {
         tasks[index].setTitle(new_title);
     };
@@ -111,8 +111,13 @@ const taskList = (title) => {
 
     const getSize = () => tasks.length;
 
+    const toggleCompleteAt = (index) => {
+        tasks[index].toggleisComplete();
+    }
+
     return { insert, remove, getTitle, 
             getElementAt, getElementIndexByTitle, getSize,
-            setTitleAt, setDateAt, setPriorityAt, setDescAt }
+            setTitleAt, setDateAt, setPriorityAt, setDescAt,
+            toggleCompleteAt, getIsCompleteAt}
 } 
 export { taskList }

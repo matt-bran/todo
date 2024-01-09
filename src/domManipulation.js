@@ -84,19 +84,19 @@ export function closeAndSubmitOverlay(form) {
     hideOverlay();
 }
 
-export function toggleTaskDesc(expand_icon) {
-    const btm_desc = expand_icon.parentNode.parentNode.parentNode.children.item(1);
+export function toggleTaskDesc(item) {
+    const btm_desc = item.children.item(1);
     if (btm_desc.textContent == "") {
         btm_desc.textContent = "No description available...";
         btm_desc.style.color = "#888";
         btm_desc.style.fontStyle = "italic";
     }
-    if (expand_icon.classList.contains('open')){
-        expand_icon.classList.remove('open');
+    if (item.classList.contains('open')){
+        item.classList.remove('open');
         btm_desc.classList.add('hidden');
     } else {
         btm_desc.classList.remove('hidden');
-        expand_icon.classList.add('open');
+        item.classList.add('open');
     }
 }
 
@@ -107,14 +107,49 @@ export function updateTaskContent(list_title) {
     document.getElementById('content-header-title').textContent = list.getTitle();
     for (let i = 0; i < list.getSize(); i++) { 
         const li = createListItem(list.getElementAt(i));
+        strikeThroughListItem(li);
         ul_tasks.appendChild(li);
     }
+    document.getElementById('list-content').classList.remove('hidden');
 }
 
 export function removeTaskFromList(task_title) {
     const list_title = document.querySelector('.active').textContent;
     lists_container[list_title].remove(task_title);
     updateTaskContent(list_title);
+}
+
+export function toggleTaskCompletion(radio) {
+    const list_title = document.querySelector('.active').textContent;
+    const list = lists_container[list_title];
+    const title = radio.nextElementSibling.textContent;
+    const index = list.getElementIndexByTitle(title);
+    list.toggleCompleteAt(index);
+    const li = radio.parentElement.parentElement.parentElement;
+    strikeThroughListItem(li);
+}
+
+function strikeThroughListItem(li) {
+    const list_title = document.querySelector('.active').textContent;
+    const list = lists_container[list_title];
+    const radio = li.children.item(0).children.item(0).children.item(0);
+    const title = radio.nextElementSibling.textContent;
+    const index = list.getElementIndexByTitle(title);
+    const li_top = li.children.item(0); 
+    const isComplete = list.getIsCompleteAt(index);
+    if (isComplete) {
+        li_top.classList.add('strikethrough');
+        radio.innerHTML = 'radio_button_checked';
+        const desc = li_top.nextElementSibling;
+        if (desc.textContent != "No description available..." && desc.textContent != "") {
+        desc.style.textDecoration = "line-through";
+        }
+    } else {
+        li_top.classList.remove('strikethrough');
+        radio.innerHTML = 'radio_button_unchecked';
+        const desc = li_top.nextElementSibling;
+        desc.style.textDecoration = "none";
+    }
 }
 
 function createListItem(task) {
@@ -126,7 +161,7 @@ function createListItem(task) {
     const desc = createDOMElement('p', { class: 'desc hidden' }, task.getDescription());
     const svg_sq = createDOMElement('span', { class: "material-symbols-outlined square" }, 'edit_square');
     const svg_del = createDOMElement('span', { class: "material-symbols-outlined delete" }, 'delete');
-    const svg_expand = createDOMElement('span', { class: "material-symbols-outlined expand" }, 'expand_more');
+    const svg_radio_unchecked = createDOMElement('span', { class: "material-symbols-outlined radio" }, 'radio_button_unchecked');
     const date = task.getDueDate();
     if (!isEqual(date, new Date(0))) {
         const date_to_str = "due " + format(date, 'MM/dd/yyyy');
@@ -134,7 +169,7 @@ function createListItem(task) {
     }
     const priority = task.getPriority();
     const p_priority = createDOMElement('p', { class: priority}, priority)
-    task_left.appendChild(svg_expand);
+    task_left.appendChild(svg_radio_unchecked);
     task_left.appendChild(p_title);
     task_right.appendChild(p_priority);
     task_right.appendChild(svg_sq);
