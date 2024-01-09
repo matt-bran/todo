@@ -1,4 +1,4 @@
-import { hideAddListForm, showAddListForm, showOverlay, 
+import { hideAddListForm, showAddListForm, removeTaskFromList, showAddTaskOverlay, showEditTaskOverlay,
         updateListMenu, updateTaskContent, updateActiveMenuListItem, hideOverlay, 
         closeAndSubmitOverlay, toggleTaskDesc } from "./domManipulation";
 
@@ -32,7 +32,7 @@ export const eventHandlers = {
     },
     handleAddNewTaskEvent: () => {
         document.getElementById('add-task').addEventListener('click', () => { 
-            showOverlay();
+            showAddTaskOverlay();
         });
     },
     handleCloseNewTaskEvent: () => {
@@ -47,12 +47,20 @@ export const eventHandlers = {
             closeAndSubmitOverlay(form);
         });
     },
-    handleExpandTaskEvent: () => {
+    handlClickTaskEvents: () => {
         document.getElementById('tasks').addEventListener('click', (e) => {
             if (e.target && e.target.matches("span.expand")) {
                 toggleTaskDesc(e.target);
             }
+            else if (e.target && e.target.matches("span.square")) {
+                const task_title = e.target.parentElement.previousSibling.children.item(1);
+                showEditTaskOverlay(task_title);
+            }
+            else if (e.target && e.target.matches("span.delete")) {
+                const task_title = e.target.parentElement.previousSibling.children.item(1);
+                removeTaskFromList(task_title);
+            }
         });
-    }
+    },
 };
 

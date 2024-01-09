@@ -1,10 +1,10 @@
 import { isEqual } from "date-fns";
 
 const task = (title, description, dueDate, priority) => {
-    const task_title = title;
-    const task_description = description;
-    const task_dueDate = dueDate;
-    const task_priority = priority;
+    let task_title = title;
+    let task_description = description;
+    let task_dueDate = dueDate;
+    let task_priority = priority;
     let isComplete = false;
 
     const getTitle = () => task_title;
@@ -13,10 +13,10 @@ const task = (title, description, dueDate, priority) => {
     const getPriority = () => task_priority;
     const getisComplete = () => isComplete;
 
-    const setTitle = (new_title) => task_title = new_title;
-    const setDescription = (new_desc) => task_description = new_desc; 
-    const setDueDate = (new_date) => task_dueDate = new_date;
-    const setPriority = (new_priority) => task_priority = new_priority;
+    const setTitle = (new_title) => { task_title = new_title };
+    const setDescription = (new_desc) => { task_description = new_desc }; 
+    const setDueDate = (new_date) => { task_dueDate = new_date };
+    const setPriority = (new_priority) => { task_priority = new_priority };
     
     const toggleisComplete = () => {
         if (isComplete == false) {
@@ -39,7 +39,7 @@ const taskList = (title) => {
         let ins_prior = priorityParser(priority);
         let ins_date = new Date(0);
         if (dueDate != "") {
-            const args = dueDate.split('-')
+            const args = dueDate.split('-');
             ins_date = new Date(args[0], args[1], args[2]);
         }
         if (tasks.length == 0) {
@@ -74,15 +74,45 @@ const taskList = (title) => {
         }
     };
 
-    const remove = (task) => list.remove(task);
+    const remove = (task_title) => {
+        const index = getElementIndexByTitle(task_title);
+        tasks.splice(index, 1);
+    };
 
     const getTitle = () => list_title;
 
     const getElementAt = (index) => tasks[index];
 
+    const getElementIndexByTitle = (target_title) => {
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].getTitle() == target_title) {
+                return i;
+            }
+        }
+        return -1;
+    };
+
+    const setTitleAt = (index, new_title) => {
+        tasks[index].setTitle(new_title);
+    };
+
+    const setDateAt = (index, date) => {
+        const args = date.split('-');
+        tasks[index].setDueDate(new Date(args[0], args[1], args[2]));
+    };
+
+    const setPriorityAt = (index, priority) => {
+        tasks[index].setPriority(priority);
+    };
+
+    const setDescAt = (index, desc) => {
+        tasks[index].setDescription(desc);
+    };
+
     const getSize = () => tasks.length;
 
-    return { insert, remove, getTitle, getElementAt, getSize }
+    return { insert, remove, getTitle, 
+            getElementAt, getElementIndexByTitle, getSize,
+            setTitleAt, setDateAt, setPriorityAt, setDescAt }
 } 
-
 export { taskList }

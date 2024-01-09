@@ -30,8 +30,33 @@ export function updateActiveMenuListItem(menu_list, active_li) {
     active_li.classList.add('active');
 }
 
-export function showOverlay() {
+export function showAddTaskOverlay() {
     document.getElementById('overlay').style.display = "block";
+    document.querySelector('#overlay-content form legend').textContent = 'New task';
+    document.getElementById('submit-btn').textContent = 'Create task';
+
+}
+
+export function showEditTaskOverlay(task_title) {
+    const list_title = document.querySelector('.active').textContent;
+    document.getElementById('overlay').style.display = "block";
+    document.querySelector('#overlay-content form legend').textContent = 'Edit task';
+    document.getElementById('submit-btn').textContent = 'Save changes';
+    const list = lists_container[list_title];;
+    for (let i = 0; i < list.getSize(); i++) {
+        const task = list.getElementAt(i);
+        if (task.getTitle() == task_title.textContent) {
+            document.querySelector('input#unedited-title').value = task.getTitle();
+            document.querySelector('input#title').value = task.getTitle();
+            document.querySelector('input#duedate').valueAsDate = task.getDueDate()
+            document.querySelector('select#priority').value = task.getPriority();
+            document.querySelector('textarea#desc').value = task.getDescription();
+        }
+    }
+}
+
+export function hideOverlay() {
+    document.getElementById('overlay').style.display = "none";
 }
 
 export function closeAndSubmitOverlay(form) {
@@ -39,24 +64,30 @@ export function closeAndSubmitOverlay(form) {
     const input_title = formData.get("title");
     const input_date = formData.get("duedate");
     const input_priority = formData.get("priority");
-    let input_desc = formData.get("desc");
-    if (input_desc == "") {
-        input_desc = "No description available...";
-    }
+    const input_desc = formData.get("desc");
+    
     const list_title = document.querySelector('.active').textContent;
-    lists_container[list_title].insert(input_title, input_desc, input_date, input_priority);
+    const list = lists_container[list_title];
+    if (document.querySelector('#overlay-content form legend').textContent == 'New task') {
+        list.insert(input_title, input_desc, input_date, input_priority);
+    }   
+    else {
+        const unedited_title = formData.get("unedited-title");
+        const index = list.getElementIndexByTitle(unedited_title);
+        list.setTitleAt(index, input_title);
+        list.setDateAt(index, input_date);
+        list.setPriorityAt(index, input_priority);
+        list.setDescAt(index, input_desc);
+    }
     updateTaskContent(list_title);
     form.reset();
     hideOverlay();
 }
 
-export function hideOverlay() {
-    document.getElementById('overlay').style.display = "none";
-}
-
 export function toggleTaskDesc(expand_icon) {
     const btm_desc = expand_icon.parentNode.parentNode.parentNode.children.item(1);
-    if (btm_desc.textContent == "No description available...") {
+    if (btm_desc.textContent == "") {
+        btm_desc.textContent = "No description available...";
         btm_desc.style.color = "#888";
         btm_desc.style.fontStyle = "italic";
     }
@@ -80,6 +111,12 @@ export function updateTaskContent(list_title) {
     }
 }
 
+export function removeTaskFromList(task_title) {
+    const list_title = document.querySelector('.active').textContent;
+    lists_container[list_title].remove(task_title);
+    updateTaskContent(list_title);
+}
+
 function createListItem(task) {
     const li = createDOMElement('li', { class: 'item'});       
     const li_top = createDOMElement('div', {class: 'li-top'});
@@ -88,6 +125,7 @@ function createListItem(task) {
     const p_title = createDOMElement('p', {}, task.getTitle());
     const desc = createDOMElement('p', { class: 'desc hidden' }, task.getDescription());
     const svg_sq = createDOMElement('span', { class: "material-symbols-outlined square" }, 'edit_square');
+    const svg_del = createDOMElement('span', { class: "material-symbols-outlined delete" }, 'delete');
     const svg_expand = createDOMElement('span', { class: "material-symbols-outlined expand" }, 'expand_more');
     const date = task.getDueDate();
     if (!isEqual(date, new Date(0))) {
@@ -100,6 +138,7 @@ function createListItem(task) {
     task_left.appendChild(p_title);
     task_right.appendChild(p_priority);
     task_right.appendChild(svg_sq);
+    task_right.appendChild(svg_del);
     li_top.appendChild(task_left);
     li_top.appendChild(task_right);
     li.appendChild(li_top);
