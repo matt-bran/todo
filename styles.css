@@ -368,14 +368,14 @@ li .desc {
     cursor: pointer;
 }
 
-.material-symbols-outlined.square {
+.material-symbols-outlined.square, .material-symbols-outlined.delete {
     font-size: 1.5rem;
     color: #888;
     transition: 0.3s;
     align-self: center;
 }
 
-.material-symbols-outlined.square:hover {
+.material-symbols-outlined.square:hover, .material-symbols-outlined.delete:hover {
     color: white;
     transition: 0.3s;
     cursor: pointer;
