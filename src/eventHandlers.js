@@ -1,67 +1,74 @@
-import { hideAddListForm, showAddListForm, removeTaskFromList, showAddTaskOverlay, showEditTaskOverlay,
-        updateListMenu, updateTaskContent, updateActiveMenuListItem, hideOverlay, 
-        closeAndSubmitOverlay, toggleTaskDesc, toggleTaskCompletion } from "./domManipulation";
+import { domController } from "./domController";
 
-export const eventHandlers = {
-    handleAddList: () => {
-        const add_list = document.getElementById('add-list');
-        add_list.addEventListener('click', () => { 
-            showAddListForm(add_list) 
+export const menuEventHandlers = {
+    handleOpenNewProjForm: () => {
+        document.getElementById('add-list').addEventListener('click', (e) => { 
+            domController.showAddListForm() 
         });
     },
-    handleSubmitNewListForm: () => {
+
+    handleCancelNewProjectForm: () => {
+        document.getElementById('cancel-list').addEventListener('click', (e) => { 
+            domController.hideAddListForm(); 
+        });
+    },
+
+    handleSubmitNewProjectForm: () => {
         document.getElementById('new-list-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            updateListMenu(e.target);
+            domController.updateListMenu(e.target);
         });
     },
-    handleCancelNewListForm: () => {
-        const cancel_list = document.getElementById('cancel-list');
-        cancel_list.addEventListener('click', () => { 
-            hideAddListForm(cancel_list) 
-        });
-    },
-    handleMenuListEvents: () => {
-        const menu_list = document.getElementById('menu-list');
-        menu_list.addEventListener('click', (e) => {
+
+    handleClickProject: () => {
+        document.getElementById('menu-list').addEventListener('click', (e) => {
             if (e.target && e.target.matches('li')) {
-                updateActiveMenuListItem(menu_list, e.target);
-                updateTaskContent(e.target.textContent);
+                domController.updateActiveProject(e.target);
+                domController.refreshTaskContent();
             }
         });
-    },
-    handleAddNewTaskEvent: () => {
+    }
+};
+
+export const listContentEventHandlers = {
+    handleOpenNewTaskForm: () => {
         document.getElementById('add-task').addEventListener('click', () => { 
-            showAddTaskOverlay();
+            domController.showAddTaskOverlay();
         });
     },
-    handleCloseNewTaskEvent: () => {
+    handleCloseNewTaskForm: () => {
         document.getElementById('close-btn').addEventListener('click', () => { 
-            hideOverlay(); 
+            domController.hideOverlay(); 
         });
     },
-    handleSubmitNewTaskEvent: () => {
-        const form = document.getElementById('new-task-form');
-        form.addEventListener('submit', (e) => {
+    handleSubmitNewTaskForm: () => {
+        document.getElementById('new-task-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            closeAndSubmitOverlay(form);
+            domController.submitOverlay(e.target);
+            domController.refreshTaskContent();
+            domController.hideOverlay();
         });
     },
-    handlClickTaskEvents: () => {
+    handleClickTask: () => {
         document.getElementById('tasks').addEventListener('click', (e) => {
+            // task card
             if (e.target && e.target.matches("li.item")) {
-                toggleTaskDesc(e.target);
+                domController.toggleTaskDesc(e.target);
             }
+            // edit task button
             else if (e.target && e.target.matches("span.square")) {
                 const task_title = e.target.parentElement.previousSibling.children.item(1);
-                showEditTaskOverlay(task_title);
+                domController.showEditTaskOverlay(task_title);
             }
+            // delete task button
             else if (e.target && e.target.matches("span.delete")) {
                 const task_title = e.target.parentElement.previousSibling.children.item(1);
-                removeTaskFromList(task_title);
+                domController.removeTaskFromList(task_title);
+                domController.refreshTaskContent();
             }
+            // complete task button
             else if (e.target && e.target.matches("span.radio")) {
-                toggleTaskCompletion(e.target);
+                domController.toggleTaskCompletion(e.target);
             }
         });
     },

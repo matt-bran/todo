@@ -1,4 +1,4 @@
-import { eventHandlers } from "./eventHandlers";
+import { menuEventHandlers, listContentEventHandlers } from "./eventHandlers";
 
 if (window.localStorage.length == 0){
     init();
@@ -7,6 +7,7 @@ if (window.localStorage.length == 0){
 }
 
 function init() {
-    Object.values(eventHandlers).forEach(handler => handler());
+    Object.values(menuEventHandlers).forEach(handler => handler());
+    Object.values(listContentEventHandlers).forEach(handler => handler());
 }
 
