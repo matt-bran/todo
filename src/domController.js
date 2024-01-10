@@ -33,7 +33,6 @@ const domController = (() => {
     
     function refreshTaskContent() { 
         const project_title = document.querySelector('.active').textContent;
-        document.getElementById('content-header-title').textContent = project_title;
         const ul_tasks = document.getElementById('tasks');
         ul_tasks.innerHTML = '';
         const query_res = dataController.readProjectAllTasks(project_title);
@@ -42,7 +41,10 @@ const domController = (() => {
             strikeThroughListItem(li_task);
             ul_tasks.appendChild(li_task);
         })
+        const count = dataController.queryCompleteCount(project_title);
+        document.getElementById('task-counter').textContent = count + " completed tasks";
         document.getElementById('list-content').classList.remove('hidden');
+        document.getElementById('content-header-title').textContent = project_title;
     }
 
     function showAddTaskOverlay() {
@@ -59,9 +61,11 @@ const domController = (() => {
         document.getElementById('submit-btn').textContent = 'Save changes';
         document.querySelector('input#unedited-title').value = query_res.title;
         document.querySelector('input#title').value = query_res.title;
-        document.querySelector('input#duedate').valueAsDate = query_res.dueDate;
         document.querySelector('select#priority').value = query_res.priority;
-        document.querySelector('textarea#desc').value = query_res.description;            
+        document.querySelector('textarea#desc').value = query_res.description;
+        if (!isEqual(query_res.dueDate, new Date(0))){
+            document.querySelector('input#duedate').valueAsDate = query_res.dueDate;    
+        }        
     }
 
     function hideOverlay() {
@@ -113,6 +117,8 @@ const domController = (() => {
         dataController.toggleTask(project_title, task_title);
         const li = radio.parentElement.parentElement.parentElement;
         strikeThroughListItem(li);
+        const count = dataController.queryCompleteCount(project_title);
+        document.getElementById('task-counter').textContent = count + " completed tasks";
     }
 
     function strikeThroughListItem(li) {

@@ -81,9 +81,20 @@ const dataController = (() => {
         }
         return false;
     }
+    function queryCompleteCount(project_title) {
+        const project = ProjectsContainer.getProject(project_title);
+        let count = 0;
+        for (let i=0; i < project.getSize(); i++) {
+            if (project.getElementAt(i).getisComplete()) {
+                count+=1;
+            }
+        }
+        return count;
+    }
 
     return { createNewProject, createNewTask, editTask, 
-            readProjectAllTasks, readProjectTask, deleteProjectTask, toggleTask }
+            readProjectAllTasks, readProjectTask, deleteProjectTask, 
+            toggleTask, queryCompleteCount }
 })();
 
 export { dataController }
