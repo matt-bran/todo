@@ -45,7 +45,7 @@ header#page-head {
     justify-content: flex-start;
 }
 
-#menu .cal {
+#menu .filter {
     display: flex; 
     justify-content: flex-start;
     margin-bottom: 0.5rem;
@@ -54,7 +54,7 @@ header#page-head {
     border-radius: 10px;
 }
 
-#menu .cal:hover {
+#menu .filter:hover {
     background: #575757;
     transition: 0.2s;
 }

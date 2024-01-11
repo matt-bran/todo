@@ -7,6 +7,10 @@ const ProjectsContainer = (() => {
         projects.push(Project(title));
     }
 
+    const getProjectByIndex = (index) => {
+        return projects[index];
+    }
+
     const getProject = (title) => {
         for (let i=0; i < projects.length; i++) {
             if (projects[i].getTitle() == title) {
@@ -14,7 +18,12 @@ const ProjectsContainer = (() => {
             }
         }
     }
-    return { createProject, getProject }
+
+    const getSize = () => { 
+        return projects.length;
+    }
+
+    return { createProject, getProjectByIndex, getProject, getSize }
 })();
 
 export { ProjectsContainer }

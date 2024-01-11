@@ -27,6 +27,13 @@ export const menuEventHandlers = {
                 domController.refreshTaskContent();
             }
         });
+    },
+    handleClickFilterOption: () => {
+        document.getElementById('menu').addEventListener('click', (e) => {
+            if (e.target.matches('div.filter')) {
+                domController.refreshFilterContent(e.target.id);
+            }
+        });
     }
 };
 
@@ -68,8 +75,9 @@ export const listContentEventHandlers = {
             }
             // delete task button
             else if (e.target && e.target.matches("span.delete")) {
-                const task_title = e.target.parentElement.previousSibling.children.item(1);
-                domController.removeTaskFromList(task_title);
+                //const task_title = e.target.parentElement.previousSibling.children.item(1);
+                const taskItem = e.target.closest('li');
+                domController.removeTaskFromList(taskItem);
                 domController.refreshTaskContent();
             }
             // complete task button

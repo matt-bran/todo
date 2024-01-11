@@ -1,3 +1,4 @@
+import { isEqual } from 'date-fns';
 import { ProjectsContainer } from './ProjectsContainer'
 
 
@@ -35,11 +36,12 @@ const dataController = (() => {
         for (let i = 0; i < project.getSize(); i++) {
             const task = project.getElementAt(i);
             let task_contents = {
-                name: task.getTitle(),
+                title: task.getTitle(),
                 dueDate: task.getDueDate(),
                 priority: task.getPriority(),
                 description: task.getDescription(),
-                isComplete: task.getisComplete()
+                isComplete: task.getisComplete(), 
+                project_title: project_title
             };
             query.push(task_contents);
         }
@@ -54,7 +56,8 @@ const dataController = (() => {
                          dueDate: curr_task.getDueDate(), 
                          priority: curr_task.getPriority(),
                          description: curr_task.getDescription(),
-                         isComplete: curr_task.getisComplete()
+                         isComplete: curr_task.getisComplete(),
+                         project_title: project_title
                         }
             }
         }
@@ -102,9 +105,72 @@ const dataController = (() => {
         return count;
     }
 
+    function queryAllTasksToday(date) {
+        let ret = [];
+        for (let i = 0; i < ProjectsContainer.getSize(); i++) {
+            const project = ProjectsContainer.getProjectByIndex(i);
+            for (let j = 0; j < project.getSize(); j++) {
+                const task = project.getElementAt(j);
+                if (isEqual(task.getDueDate, date)) {
+                    ret.push({
+                        project_title: project.getTitle(),
+                        title: task.getTitle(),
+                        dueDate: task.getDueDate(),
+                        priority: task.getPriority(), 
+                        description: task.getDescription()
+                    });
+                }
+            }
+        }
+        return ret;
+    } 
+
+    function queryAllTasksByCompletion(isComplete) {
+        let ret = [];
+        for (let i = 0; i < ProjectsContainer.getSize(); i++) {
+            const project = ProjectsContainer.getProjectByIndex(i);
+            for (let j = 0; j < project.getSize(); j++) {
+                const task = project.getElementAt(j);
+                if (isComplete == task.getisComplete()) {
+                    ret.push({
+                        project_title: project.getTitle(),
+                        title: task.getTitle(),
+                        dueDate: task.getDueDate(),
+                        priority: task.getPriority(), 
+                        description: task.getDescription()
+                    });
+                }
+            }
+        }
+        return ret;
+    }
+
+    function queryAllTasksByPriority(priority) {
+        let ret = [];
+        for (let i = 0; i < ProjectsContainer.getSize(); i++) {
+            const project = ProjectsContainer.getProjectByIndex(i);
+            for (let j = 0; j < project.getSize(); j++) {
+                const task = project.getElementAt(j);
+                console.log('(queryAllTasksByPriority) task title: ' + task.getTitle());
+                if (priority == task.getPriority()) {
+                    ret.push({
+                        project_title: project.getTitle(),
+                        title: task.getTitle(),
+                        dueDate: task.getDueDate(),
+                        priority: task.getPriority(), 
+                        description: task.getDescription(), 
+                        isComplete: task.getisComplete()
+                    });
+                }
+            }
+        }
+        return ret;
+    }
+
     return { createNewProject, createNewTask, editTask, 
             readProjectAllTasks, readProjectTask, deleteProjectTask, 
-            toggleTask, queryCompleteCount, deleteProjectCompleteTasks }
+            toggleTask, queryCompleteCount, deleteProjectCompleteTasks,
+            queryAllTasksByCompletion, queryAllTasksByPriority, queryAllTasksToday }
 })();
 
 export { dataController }

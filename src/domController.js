@@ -30,22 +30,6 @@ const domController = (() => {
         Array.from(menu_list.children).forEach((node) => node.classList.remove('active'));
         li.classList.add('active');  
     }
-    
-    function refreshTaskContent() { 
-        const project_title = document.querySelector('.active').textContent;
-        const ul_tasks = document.getElementById('tasks');
-        ul_tasks.innerHTML = '';
-        const query_res = dataController.readProjectAllTasks(project_title);
-        query_res.forEach((task) => {
-            const li_task = createLIHelper(task);
-            strikeThroughListItem(li_task);
-            ul_tasks.appendChild(li_task);
-        })
-        const count = dataController.queryCompleteCount(project_title);
-        document.getElementById('task-counter').textContent = count + " completed tasks";
-        document.getElementById('list-content').classList.remove('hidden');
-        document.getElementById('content-header-title').textContent = project_title;
-    }
 
     function showAddTaskOverlay() {
         document.getElementById('overlay').style.display = "block";
@@ -106,9 +90,9 @@ const domController = (() => {
         }
     }
 
-    function removeTaskFromList(task_title) {
-        const project_title = document.querySelector('.active').textContent;
-        dataController.deleteProjectTask(project_title, task_title.textContent);
+    function removeTaskFromList(taskItem) {
+        //const project_title = document.querySelector('.active').textContent;
+        dataController.deleteProjectTask(taskItem.data.project_title, taskItem.data.task_title);
     }  
 
     function toggleTaskCompletion(radio) {
@@ -121,12 +105,67 @@ const domController = (() => {
         document.getElementById('task-counter').textContent = count + " completed tasks";
     }
 
-    function strikeThroughListItem(li) {
+
+    function clearCompletedTasks() {
         const project_title = document.querySelector('.active').textContent;
-        const radio = li.children.item(0).children.item(0).children.item(0);
-        const task_title = radio.nextElementSibling.textContent;
-        const task = dataController.readProjectTask(project_title, task_title);
+        dataController.deleteProjectCompleteTasks(project_title);
+    }
+
+    function refreshFilterContent(query_type) {
+        let res = [];
+        switch (query_type){
+            case 'today': 
+                res = dataController.queryAllTasksToday(todays_date);
+                break;
+            case 'complete': 
+                res = dataController.queryAllTasksByCompletion(true);
+                break;
+            case 'incomplete': 
+                res = dataController.queryAllTasksByCompletion(false);
+                break;
+            case 'high': 
+                res = dataController.queryAllTasksByPriority('high');
+                break;
+            case 'medium': 
+                res = dataController.queryAllTasksByPriority('medium');
+                break;
+            case 'low': 
+                res = dataController.queryAllTasksByPriority('low');
+                break;
+        }
+        const ul_tasks = document.getElementById('tasks');
+        ul_tasks.innerHTML = '';
+        res.forEach((task) => {
+            const li_task = createLIHelper(task);
+            strikeThroughListItem(li_task);
+            ul_tasks.appendChild(li_task);
+        });
+    }
+
+    function refreshTaskContent() { 
+        const project_title = document.querySelector('.active').textContent;
+        const ul_tasks = document.getElementById('tasks');
+        ul_tasks.innerHTML = '';
+        const query_res = dataController.readProjectAllTasks(project_title);
+        query_res.forEach((task) => {
+            const li_task = createLIHelper(task);
+            strikeThroughListItem(li_task);
+            ul_tasks.appendChild(li_task);
+        })
+        const count = dataController.queryCompleteCount(project_title);
+        document.getElementById('task-counter').textContent = count + " completed tasks";
+        document.getElementById('list-content').classList.remove('hidden');
+        document.getElementById('content-header-title').textContent = project_title;
+    }
+
+    function strikeThroughListItem(li) {
+        const radio = li.children.item(0).children.item(0).children.item(0);        
         const li_top = li.children.item(0); 
+
+        const project_title = li.data.project_title;
+        const task_title = li.data.task_title;
+        const task = dataController.readProjectTask(project_title, task_title);
+
         if (task.isComplete) {
             li_top.classList.add('strikethrough');
             radio.innerHTML = 'radio_button_checked';
@@ -142,17 +181,13 @@ const domController = (() => {
         }
     }
 
-    function clearCompletedTasks() {
-        const project_title = document.querySelector('.active').textContent;
-        dataController.deleteProjectCompleteTasks(project_title);
-    }
-
+    /* takes project title and task object and outputs a list item */
     function createLIHelper(task) {
         const li = createDOMElement('li', { class: 'item'});       
         const li_top = createDOMElement('div', {class: 'li-top'});
         const task_right = createDOMElement('div', {class: "task-right"});
         const task_left = createDOMElement('div', {class: "task-left"});
-        const p_title = createDOMElement('p', {}, task.name);
+        const p_title = createDOMElement('p', {}, task.title);
         const desc = createDOMElement('p', { class: 'desc hidden' }, task.description);
         const svg_sq = createDOMElement('span', { class: "material-symbols-outlined square" }, 'edit_square');
         const svg_del = createDOMElement('span', { class: "material-symbols-outlined delete" }, 'delete');
@@ -173,12 +208,14 @@ const domController = (() => {
         li_top.appendChild(task_right);
         li.appendChild(li_top);
         li.appendChild(desc);
+        li.data = { project_title: task.project_title, task_title: task.title }
+        //console.log(li.data);
         return li;
     }
     return { showAddListForm, updateListMenu, hideAddListForm, updateActiveProject, 
             refreshTaskContent, showAddTaskOverlay, showEditTaskOverlay, hideOverlay,
             submitOverlay, toggleTaskDesc, removeTaskFromList, toggleTaskCompletion, strikeThroughListItem, 
-            clearCompletedTasks }
+            clearCompletedTasks, refreshFilterContent }
 })();
 
 export { domController }
