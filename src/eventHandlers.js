@@ -49,6 +49,12 @@ export const listContentEventHandlers = {
             domController.hideOverlay();
         });
     },
+    handleClearTasks: () => {
+        document.getElementById('clear-tasks').addEventListener('click', () => {
+            domController.clearCompletedTasks();
+            domController.refreshTaskContent();
+        });
+    },
     handleClickTask: () => {
         document.getElementById('tasks').addEventListener('click', (e) => {
             // task card

@@ -81,6 +81,16 @@ const dataController = (() => {
         }
         return false;
     }
+    function deleteProjectCompleteTasks(project_title) {
+        const project = ProjectsContainer.getProject(project_title);
+        console.log('List size before deletion: ' + project.getSize());
+        for (let i=project.getSize()-1; i >= 0; i--) {
+            if (project.getElementAt(i).getisComplete()) {
+                const title = project.getElementAt(i).getTitle();
+                project.remove(title);
+            }
+        }
+    }
     function queryCompleteCount(project_title) {
         const project = ProjectsContainer.getProject(project_title);
         let count = 0;
@@ -94,7 +104,7 @@ const dataController = (() => {
 
     return { createNewProject, createNewTask, editTask, 
             readProjectAllTasks, readProjectTask, deleteProjectTask, 
-            toggleTask, queryCompleteCount }
+            toggleTask, queryCompleteCount, deleteProjectCompleteTasks }
 })();
 
 export { dataController }

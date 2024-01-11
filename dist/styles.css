@@ -48,7 +48,7 @@ header#page-head {
 #menu .cal {
     display: flex; 
     justify-content: flex-start;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     padding: 0.625rem 0.5rem 0.625rem 0.5rem;
     transition: 0.2s;
     border-radius: 10px;
@@ -223,15 +223,15 @@ li .task-right p {
     align-self: center;
 }
 
-.task-right p.low {
+.low {
     color: #888;
 }
 
-.task-right p.medium {
+.medium {
     color: #0baeb9;
 }
 
-.task-right p.high {
+.high {
     color: #b84646;
 }
 
@@ -371,6 +371,17 @@ li .desc {
   'opsz' 24
 }
 
+.material-symbols-outlined.complete-tasks, .material-symbols-outlined.incomplete-tasks {
+    margin-right: 0.625rem;
+}
+
+.material-symbols-outlined.circle {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 1rem;
+  margin-right: 0.625rem;
+  align-self: center;
+}
+
 .material-symbols-outlined.done {
     color: #888;
 }
@@ -379,6 +390,7 @@ li .desc {
     font-size: 1.5rem;
     color:white;
     margin-right: 0.625rem;
+    align-self: center;
 }
 
 .material-symbols-outlined.radio {

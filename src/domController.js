@@ -142,6 +142,11 @@ const domController = (() => {
         }
     }
 
+    function clearCompletedTasks() {
+        const project_title = document.querySelector('.active').textContent;
+        dataController.deleteProjectCompleteTasks(project_title);
+    }
+
     function createLIHelper(task) {
         const li = createDOMElement('li', { class: 'item'});       
         const li_top = createDOMElement('div', {class: 'li-top'});
@@ -172,7 +177,8 @@ const domController = (() => {
     }
     return { showAddListForm, updateListMenu, hideAddListForm, updateActiveProject, 
             refreshTaskContent, showAddTaskOverlay, showEditTaskOverlay, hideOverlay,
-            submitOverlay, toggleTaskDesc, removeTaskFromList, toggleTaskCompletion, strikeThroughListItem }
+            submitOverlay, toggleTaskDesc, removeTaskFromList, toggleTaskCompletion, strikeThroughListItem, 
+            clearCompletedTasks }
 })();
 
 export { domController }
