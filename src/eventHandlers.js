@@ -19,19 +19,15 @@ export const menuEventHandlers = {
             domController.updateListMenu(e.target);
         });
     },
-
-    handleClickProject: () => {
-        document.getElementById('menu-list').addEventListener('click', (e) => {
-            if (e.target && e.target.matches('li')) {
-                domController.updateActiveProject(e.target);
-                domController.refreshTaskContent();
-            }
-        });
-    },
-    handleClickFilterOption: () => {
+    handleClickTab: () => {
         document.getElementById('menu').addEventListener('click', (e) => {
-            if (e.target.matches('div.filter')) {
-                domController.refreshFilterContent(e.target.id);
+            if (e.target.matches('.project')) {
+                domController.updateActiveTab(e.target);
+                domController.refreshTaskContent();
+            } 
+            else if (e.target.matches('.filter')) {
+                domController.updateActiveTab(e.target);
+                domController.refreshTaskContent();        
             }
         });
     }
@@ -70,19 +66,17 @@ export const listContentEventHandlers = {
             }
             // edit task button
             else if (e.target && e.target.matches("span.square")) {
-                const task_title = e.target.parentElement.previousSibling.children.item(1);
-                domController.showEditTaskOverlay(task_title);
+                const li = e.target.closest('li');
+                domController.showEditTaskOverlay(li);
             }
             // delete task button
             else if (e.target && e.target.matches("span.delete")) {
-                //const task_title = e.target.parentElement.previousSibling.children.item(1);
-                const taskItem = e.target.closest('li');
-                domController.removeTaskFromList(taskItem);
+                domController.removeTaskFromList(e.target.closest('li'));
                 domController.refreshTaskContent();
             }
             // complete task button
             else if (e.target && e.target.matches("span.radio")) {
-                domController.toggleTaskCompletion(e.target);
+                domController.toggleTaskCompletion(e.target.closest('li'));
             }
         });
     },

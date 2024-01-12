@@ -1,4 +1,4 @@
-import { isEqual } from 'date-fns';
+import { add, isToday, startOfToday } from 'date-fns';
 import { ProjectsContainer } from './ProjectsContainer'
 
 
@@ -25,7 +25,7 @@ const dataController = (() => {
                     project.getElementAt(i).setDueDate(new Date(0));
                 } else {
                     const args = edits.dueDate.split('-');
-                    project.getElementAt(i).setDueDate(new Date(args[0], args[1], args[2]));
+                    project.getElementAt(i).setDueDate(new Date(args[0], parseInt(args[1])-1, args[2]));
                 }
             }
         }
@@ -66,8 +66,9 @@ const dataController = (() => {
         const project = ProjectsContainer.getProject(project_title);
         for (let i=0; i < project.getSize(); i++) {
             const curr_task = project.getElementAt(i);
+            console.log('(deleteProjectTask) title: ' + curr_task.getTitle());
             if (task_title == curr_task.getTitle()) {
-                project.remove(i);
+                project.remove(task_title);
                 return true;
             }
         }
@@ -105,13 +106,34 @@ const dataController = (() => {
         return count;
     }
 
-    function queryAllTasksToday(date) {
+    function queryAllTasksToday() {
         let ret = [];
         for (let i = 0; i < ProjectsContainer.getSize(); i++) {
             const project = ProjectsContainer.getProjectByIndex(i);
             for (let j = 0; j < project.getSize(); j++) {
                 const task = project.getElementAt(j);
-                if (isEqual(task.getDueDate, date)) {
+                if (isToday(task.getDueDate())) {
+                    ret.push({
+                        project_title: project.getTitle(),
+                        title: task.getTitle(),
+                        dueDate: task.getDueDate(),
+                        priority: task.getPriority(), 
+                        description: task.getDescription()
+                    });
+                }
+            }
+        }
+        return ret;
+    } 
+
+    function queryAllTasksWeek() {
+        let ret = [];
+        for (let i = 0; i < ProjectsContainer.getSize(); i++) {
+            const project = ProjectsContainer.getProjectByIndex(i);
+            for (let j = 0; j < project.getSize(); j++) {
+                const task = project.getElementAt(j);
+                const task_date = task.getDueDate().getTime();
+                if (task_date >= startOfToday().getTime() && task_date <= add(Date.now(), {weeks: 1}).getTime()) {
                     ret.push({
                         project_title: project.getTitle(),
                         title: task.getTitle(),
@@ -137,7 +159,8 @@ const dataController = (() => {
                         title: task.getTitle(),
                         dueDate: task.getDueDate(),
                         priority: task.getPriority(), 
-                        description: task.getDescription()
+                        description: task.getDescription(), 
+                        isComplete: task.getisComplete()
                     });
                 }
             }
@@ -170,7 +193,7 @@ const dataController = (() => {
     return { createNewProject, createNewTask, editTask, 
             readProjectAllTasks, readProjectTask, deleteProjectTask, 
             toggleTask, queryCompleteCount, deleteProjectCompleteTasks,
-            queryAllTasksByCompletion, queryAllTasksByPriority, queryAllTasksToday }
+            queryAllTasksByCompletion, queryAllTasksByPriority, queryAllTasksToday, queryAllTasksWeek }
 })();
 
 export { dataController }

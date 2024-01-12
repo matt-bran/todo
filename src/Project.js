@@ -9,7 +9,7 @@ const Project = (title) => {
         let ins_date = new Date(0);
         if (task.dueDate != "") {
             const args = task.dueDate.split('-');
-            ins_date = new Date(args[0], args[1], args[2]);
+            ins_date = new Date(args[0], parseInt(args[1])-1, args[2]);
         }
         if (tasks.length == 0) {
             tasks.push(Task(task.title, task.desc, ins_date, task.priority));

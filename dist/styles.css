@@ -45,7 +45,12 @@ header#page-head {
     justify-content: flex-start;
 }
 
-#menu .filter {
+#menu-list {
+    padding-top: 0.5rem;
+    list-style-type: none;
+}
+
+#menu-list .filter {
     display: flex; 
     justify-content: flex-start;
     margin-bottom: 0.5rem;
@@ -54,10 +59,27 @@ header#page-head {
     border-radius: 10px;
 }
 
-#menu .filter:hover {
+#menu-list .filter:hover {
     background: #575757;
     transition: 0.2s;
 }
+
+#menu-list .project {
+    font-size: 1.125rem;
+    padding: 0.75rem;
+    margin-bottom: 0.625rem;
+    border-radius: 10px;
+}
+
+#menu-list .project.active {
+    background-color: #575757;
+}
+
+#menu-list .project:hover {
+    background-color: #575757;
+    transition: 0.3s;
+}
+
 
 #menu div h2 {
     margin-left: 1rem;
@@ -117,28 +139,6 @@ header#page-head {
 #menu form div#form-btns span:hover {
     color:white;
 }
-
-#menu ul {
-    padding-top: 0.5rem;
-    list-style-type: none;
-}
-
-#menu ul li {
-    font-size: 1.125rem;
-    padding: 0.75rem;
-    margin-bottom: 0.625rem;
-    border-radius: 10px;
-}
-
-#menu ul li.active {
-    background-color: #575757;
-}
-
-#menu ul li:hover {
-    background-color: #575757;
-    transition: 0.3s;
-}
-
 /* list content styles */
 
 #content #list-content {

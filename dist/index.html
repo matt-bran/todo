@@ -15,53 +15,53 @@
     </header>
     <div id="content">
         <div id="menu">
-            <div id = "today"  class="filter">
-                <span class="material-symbols-outlined today">
-                    today
-                </span>
-                <h3>Today</h3>
-            </div>
-            <div id = "week" class="filter">
-                <span class="material-symbols-outlined week">
-                    date_range
-                </span>
-                <h3>This week</h3>
-            </div>
-            <div id = "complete" class="filter">
-                <span class="material-symbols-outlined complete-tasks">
-                    task
-                </span>
-                <h3>Complete</h3>
-            </div>
-            <div id = "incomplete" class="filter">
-                <span class="material-symbols-outlined incomplete-tasks">
-                    scan_delete
-                </span>
-                <h3>Incomplete</h3>
-            </div>
-            <div id = "high" class="filter high">
-                <span class="material-symbols-outlined circle">
-                    circle
-                </span>
-                <h3>High</h3>
-            </div>
-            <div id = "medium" class="filter medium">
-                <span class="material-symbols-outlined circle">
-                    circle
-                </span>
-                <h3>Medium</h3>
-            </div>
-            <div id = "low" class="filter low">
-                <span class="material-symbols-outlined circle">
-                    circle
-                </span>
-                <h3>Low</h3>
-            </div>
-            <div id="lists-header">
-                <i class="fi-xwsuxl-folder-solid"></i>
-                <h2>Lists</h2>
-            </div>
             <ul id="menu-list">
+                <li id = "today"  class="tab filter">
+                    <span class="material-symbols-outlined today">
+                        today
+                    </span>
+                    <h3>Today</h3>
+                </li>
+                <li id = "week" class="tab filter">
+                    <span class="material-symbols-outlined week">
+                        date_range
+                    </span>
+                    <h3>This week</h3>
+                </li>
+                <li id = "complete" class="tab filter">
+                    <span class="material-symbols-outlined complete-tasks">
+                        task
+                    </span>
+                    <h3>Complete</h3>
+                </li>
+                <li id = "incomplete" class="tab filter">
+                    <span class="material-symbols-outlined incomplete-tasks">
+                        scan_delete
+                    </span>
+                    <h3>Incomplete</h3>
+                </li>
+                <li id = "high" class="tab high filter">
+                    <span class="material-symbols-outlined circle">
+                        circle
+                    </span>
+                    <h3>High</h3>
+                </li>
+                <li id = "medium" class="tab medium filter">
+                    <span class="material-symbols-outlined circle">
+                        circle
+                    </span>
+                    <h3>Medium</h3>
+                </li>
+                <li id = "low" class="tab low filter">
+                    <span class="material-symbols-outlined circle">
+                        circle
+                    </span>
+                    <h3>Low</h3>
+                </li>
+                <div id="lists-header">
+                    <i class="fi-xwsuxl-folder-solid"></i>
+                    <h2>Lists</h2>
+                </div>
             </ul>
             <div id="add-list">
                 <span class="material-symbols-outlined add">
@@ -114,6 +114,7 @@
                 </div>
                 <legend></legend>
                 <input id="unedited-title" class="hidden" type="text" name="unedited-title">
+                <input id="edit-form-proj-title" class="hidden" type="text" name="project-title">
                 <div class="input-field">
                     <label for="title">Title</label>
                     <input placeholder="Title..." type="text" name="title" id="title" required>
