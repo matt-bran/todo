@@ -1,6 +1,5 @@
 import { add, isToday, startOfToday } from 'date-fns';
-import { ProjectsContainer } from './ProjectsContainer'
-
+import { ProjectsContainer } from '../Models/ProjectsContainer'
 
 const dataController = (() => {
 

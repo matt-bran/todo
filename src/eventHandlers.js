@@ -1,4 +1,4 @@
-import { domController } from "./domController";
+import { domController } from "./Controllers/domController";
 
 export const menuEventHandlers = {
     handleOpenNewProjForm: () => {

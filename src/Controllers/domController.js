@@ -1,5 +1,5 @@
 import { dataController } from './dataController';
-import { createDOMElement } from "./utils";
+import { createDOMElement } from "../utils";
 import { format } from "date-fns";
 import { isEqual } from "date-fns";
 
