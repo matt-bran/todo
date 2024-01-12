@@ -118,7 +118,8 @@ const dataController = (() => {
                         title: task.getTitle(),
                         dueDate: task.getDueDate(),
                         priority: task.getPriority(), 
-                        description: task.getDescription()
+                        description: task.getDescription(),
+                        isComplete: task.getisComplete()
                     });
                 }
             }
@@ -139,7 +140,8 @@ const dataController = (() => {
                         title: task.getTitle(),
                         dueDate: task.getDueDate(),
                         priority: task.getPriority(), 
-                        description: task.getDescription()
+                        description: task.getDescription(),
+                        isComplete: task.getisComplete()
                     });
                 }
             }
