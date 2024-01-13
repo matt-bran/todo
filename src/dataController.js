@@ -1,5 +1,5 @@
 import { add, isToday, startOfToday } from 'date-fns';
-import { ProjectsContainer } from '../Models/ProjectsContainer'
+import { ProjectsContainer } from './Models/ProjectsContainer'
 
 const dataController = (() => {
 
@@ -65,7 +65,6 @@ const dataController = (() => {
         const project = ProjectsContainer.getProject(project_title);
         for (let i=0; i < project.getSize(); i++) {
             const curr_task = project.getElementAt(i);
-            console.log('(deleteProjectTask) title: ' + curr_task.getTitle());
             if (task_title == curr_task.getTitle()) {
                 project.remove(task_title);
                 return true;
@@ -86,7 +85,6 @@ const dataController = (() => {
     }
     function deleteProjectCompleteTasks(project_title) {
         const project = ProjectsContainer.getProject(project_title);
-        console.log('List size before deletion: ' + project.getSize());
         for (let i=project.getSize()-1; i >= 0; i--) {
             if (project.getElementAt(i).getisComplete()) {
                 const title = project.getElementAt(i).getTitle();
@@ -175,7 +173,6 @@ const dataController = (() => {
             const project = ProjectsContainer.getProjectByIndex(i);
             for (let j = 0; j < project.getSize(); j++) {
                 const task = project.getElementAt(j);
-                console.log('(queryAllTasksByPriority) task title: ' + task.getTitle());
                 if (priority == task.getPriority()) {
                     ret.push({
                         project_title: project.getTitle(),
