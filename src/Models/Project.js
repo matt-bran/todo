@@ -12,22 +12,22 @@ const Project = (title) => {
             ins_date = new Date(args[0], parseInt(args[1])-1, args[2]);
         }
         if (tasks.length == 0) {
-            tasks.push(Task(task.title, task.desc, ins_date, task.priority));
+            tasks.push(Task(task.title, task.description, ins_date, task.priority, task.isComplete));
             return;
         }
         for (let i = 0; i < tasks.length; i++) {
             let temp_prior = priorityParser(tasks[i].getPriority());
             if (ins_prior > temp_prior) {
-                tasks.splice(i, 0, Task(task.title, task.desc, ins_date, task.priority));
+                tasks.splice(i, 0, Task(task.title, task.description, ins_date, task.priority, task.isComplete));
                 return;
             } 
             else {
                 if (i == tasks.length-1) {
-                    tasks.push(Task(task.title, task.desc, ins_date, task.priority));
+                    tasks.push(Task(task.title, task.description, ins_date, task.priority, task.isComplete));
                     return;
                 }
                 else if (ins_prior > priorityParser(tasks[i+1].getPriority)) {
-                    tasks.splice(i+1, 0, Task(task.title, task.desc, ins_date, task.priority));
+                    tasks.splice(i+1, 0, Task(task.title, task.description, ins_date, task.priority, task.isComplete));
                     return;
                 }
             } 
