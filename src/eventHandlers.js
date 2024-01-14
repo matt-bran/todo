@@ -17,8 +17,6 @@ export const menuEventHandlers = {
         document.getElementById('new-list-form').addEventListener('submit', (e) => {
             e.preventDefault();
             MenuView.SubmitNewProjectForm(e.target);
-            MenuView.hideAddListForm();
-            MenuView.renderProjectsList();
         });
     },
     handleClickTab: () => {

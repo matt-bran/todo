@@ -70,7 +70,7 @@
                 <p>Add list</p>
             </div>
             <form id = "new-list-form" class="hidden">
-                <input placeholder="Enter listname..." type='text' name='new-project-title' id='new-project-title' required/>
+                <input placeholder="Enter listname..." type='text' name='new-project-title' id='new-project-title' autocomplete="off" required/>
                 <div id = "form-btns">
                     <button type="submit">
                         <span class="material-symbols-outlined done">
@@ -84,6 +84,7 @@
                     </button>
                 </div>
             </form>
+            <p id="error" class="hidden">There is a project that exists with this name already.</p>
         </div>
         <div id="list-content" class="hidden">
             <header id = "content-header">
