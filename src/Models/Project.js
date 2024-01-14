@@ -64,7 +64,22 @@ const Project = (title) => {
 
     const getSize = () => tasks.length;
 
+    const exportData = () => {
+        let data = []; 
+        for (let i = 0; i < tasks.length; i++) {
+            const date = tasks[i].getDueDate();
+            data.push({
+                title: tasks[i].getTitle(),
+                dueDate: `${date.getFullYear()}-${parseInt(date.getMonth())+1}-${date.getDate()}`,
+                priority: tasks[i].getPriority(),
+                description: tasks[i].getDescription(), 
+                isComplete: tasks[i].getisComplete()
+            });
+        }
+        return data;
+    }
+
     return { insert, remove, getTitle, 
-            getElementAt, getElementIndexByTitle, getSize}
+            getElementAt, getElementIndexByTitle, getSize, exportData}
 } 
 export { Project }

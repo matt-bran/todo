@@ -1,9 +1,12 @@
 import { menuEventHandlers, listContentEventHandlers } from "./eventHandlers";
+import { dataController } from "./dataController"
+import { MenuView } from "./Views/MenuView";
 
-if (window.localStorage.length == 0){
-    init();
-} else {
-    fetchData();
+init();
+
+if (window.localStorage.length > 0) {
+    dataController.importProjects();
+    MenuView.renderProjectsList();
 }
 
 function init() {

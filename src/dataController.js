@@ -1,15 +1,42 @@
 import { add, isToday, startOfToday } from 'date-fns';
 import { ProjectsContainer } from './Models/ProjectsContainer.js'
+import { loadStorage, writeToStorage } from './utils.js';
 
 const dataController = (() => {
 
-    function createNewProject(title) {
-        ProjectsContainer.createProject(title);
+    function importProjects() {
+        const projects = loadStorage();
+        projects.forEach((obj) => {
+            const project_title = obj.key;
+            const tasks = obj.value;
+            createNewProject(project_title);
+            tasks.forEach((task) => {
+                createNewTask(project_title, {
+                    title: task.title,
+                    dueDate: task.dueDate,
+                    priority: task.priority,
+                    description: task.description,
+                    isComplete: task.isComplete
+                })
+            });
+        });
     }
 
+    function createNewProject(title) {
+        ProjectsContainer.createProject(title);
+        writeToStorage(title, ProjectsContainer.getProject(title).exportData());
+    }
+    function readAllProjectTitles() {
+        let res = [];
+        for (let i = 0; i < ProjectsContainer.getSize(); i++) {
+            res.push(ProjectsContainer.getProjectByIndex(i).getTitle());
+        }
+        return res;
+    }
     function createNewTask(project_title, task) {
         const project = ProjectsContainer.getProject(project_title);
         project.insert(task)
+        writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
     }
 
     function editTask(project_title, task_title, edits) {
@@ -26,6 +53,8 @@ const dataController = (() => {
                     const args = edits.dueDate.split('-');
                     project.getElementAt(i).setDueDate(new Date(args[0], parseInt(args[1])-1, args[2]));
                 }
+                writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
+                return;
             }
         }
     }
@@ -67,6 +96,7 @@ const dataController = (() => {
             const curr_task = project.getElementAt(i);
             if (task_title == curr_task.getTitle()) {
                 project.remove(task_title);
+                writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
                 return true;
             }
         }
@@ -78,6 +108,7 @@ const dataController = (() => {
             const curr_task = project.getElementAt(i);
             if (task_title == curr_task.getTitle()) {
                 curr_task.toggleisComplete();
+                writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
                 return true;
             }
         }
@@ -89,6 +120,7 @@ const dataController = (() => {
             if (project.getElementAt(i).getisComplete()) {
                 const title = project.getElementAt(i).getTitle();
                 project.remove(title);
+                writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
             }
         }
     }
@@ -191,7 +223,8 @@ const dataController = (() => {
     return { createNewProject, createNewTask, editTask, 
             readProjectAllTasks, readProjectTask, deleteProjectTask, 
             toggleTask, queryCompleteCount, deleteProjectCompleteTasks,
-            queryAllTasksByCompletion, queryAllTasksByPriority, queryAllTasksToday, queryAllTasksWeek }
+            queryAllTasksByCompletion, queryAllTasksByPriority, queryAllTasksToday, 
+            queryAllTasksWeek, importProjects, readAllProjectTitles }
 })();
 
 export { dataController }

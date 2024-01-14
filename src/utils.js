@@ -18,4 +18,18 @@ function createDOMElement(tagName, HTML_attributes = {}, content = null) {
   return element;
 }
 
-export { createDOMElement }
+function writeToStorage(key, value) {
+  window.localStorage.setItem(key, JSON.stringify(value));
+}
+
+function loadStorage() {
+  let data = [];
+  for (let i = 0; i < window.localStorage.length; i++) {
+    let key = window.localStorage.key(i)
+    let value = window.localStorage.getItem(key);
+    data.push({key: key, value: JSON.parse(value)});
+  }
+  return data;
+}
+
+export { createDOMElement, writeToStorage, loadStorage }
