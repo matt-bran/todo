@@ -16,7 +16,9 @@ export const menuEventHandlers = {
     handleSubmitNewProjectForm: () => {
         document.getElementById('new-list-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            MenuView.updateListMenu(e.target);
+            MenuView.SubmitNewProjectForm(e.target);
+            MenuView.hideAddListForm();
+            MenuView.renderProjectsList();
         });
     },
     handleClickTab: () => {
@@ -71,7 +73,7 @@ export const listContentEventHandlers = {
             }
             // delete task button
             else if (e.target && e.target.matches("span.delete")) {
-                ContentView.removeTaskFromList(e.target.closest('li').data.project_title, e.target.closest('li').data.task_title);
+                ContentView.removeTask(e.target.closest('li'));
                 ContentView.refreshTaskContent();
             }
             // complete task button
