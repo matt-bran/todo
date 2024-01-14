@@ -224,15 +224,15 @@ li .task-right p {
 }
 
 .low {
-    color: #888;
+    color: #888 !important;
 }
 
 .medium {
-    color: #0baeb9;
+    color: #0baeb9 !important;
 }
 
 .high {
-    color: #b84646;
+    color: #b84646 !important;
 }
 
 .hidden {
