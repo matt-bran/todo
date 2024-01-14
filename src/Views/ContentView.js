@@ -1,6 +1,6 @@
 import { dataController } from '../dataController';
 import { createDOMElement } from "../utils";
-import { format } from "date-fns";
+import { format, isBefore, startOfDay } from "date-fns";
 import { isEqual } from "date-fns";
 
 /* Responsible for all DOM manipulation that occurs in the content area of the webpage */
@@ -21,7 +21,7 @@ export const ContentView = (() => {
             item.classList.add('open');
         }
     }
-    function removeTaskFromList(taskItem) {
+    function removeTask(taskItem) {
         dataController.deleteProjectTask(taskItem.data.project_title, taskItem.data.task_title);
     }  
     function toggleTaskCompletion(li) {
@@ -128,7 +128,7 @@ export const ContentView = (() => {
         const svg_del = createDOMElement('span', { class: "material-symbols-outlined delete" }, 'delete');
         const svg_radio_unchecked = createDOMElement('span', { class: "material-symbols-outlined radio" }, 'radio_button_unchecked');
         const date = task.dueDate;
-        if (!isEqual(date, new Date(0))) {
+        if (!isEqual(startOfDay(date), startOfDay(new Date(0)))) {
             const date_to_str = "due " + format(date, 'MM/dd/yyyy');
             task_right.appendChild(createDOMElement('p', { class: 'task-date'}, date_to_str));
         }
@@ -146,6 +146,6 @@ export const ContentView = (() => {
         li.data = { project_title: task.project_title, task_title: task.title, isComplete: 'false' }
         return li;
     }
-    return { refreshTaskContent, toggleTaskDesc, removeTaskFromList, toggleTaskCompletion, strikeThroughListItem, 
+    return { refreshTaskContent, toggleTaskDesc, removeTask, toggleTaskCompletion, strikeThroughListItem, 
             clearCompletedTasks}
 })();
