@@ -72,11 +72,11 @@ header#page-head {
 }
 
 #menu-list .project.active {
-    background-color: #575757;
+    background-color: #333333;
 }
 
 #menu-list .project:hover {
-    background-color: #575757;
+    background-color: #333333;
     transition: 0.3s;
 }
 
@@ -87,18 +87,18 @@ header#page-head {
 
 #add-list {
     display: flex;
-    color: rgb(100, 100, 100);
+    color: rgb(180, 180, 180);
     transition: 0.2s;
 }
 
 #add-list:hover {
     color: white;
     transition: 0.2s;
+    font-style: bold;
 }
 
-
 #menu #add-list p {
-    font-size: 1.5rem;
+    font-size: 1.1rem !important;
     border: none;
     font-size: 1rem;
     margin-left: 0.5rem;
@@ -240,7 +240,7 @@ li .task-right p {
 }
 
 .low {
-    color: #888 !important;
+    color: green !important;
 }
 
 .medium {
