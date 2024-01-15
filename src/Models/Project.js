@@ -57,7 +57,7 @@ const Project = (title) => {
 
     const getElementIndexById = (id) => {
         for (let i = 0; i < tasks.length; i++) {
-            if (tasks[i].getId() == target_id) {
+            if (tasks[i].getId() == id) {
                 return i;
             }
         }
