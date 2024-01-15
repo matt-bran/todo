@@ -136,6 +136,10 @@ export const ContentView = (() => {
         const p_priority = createDOMElement('p', { class: priority}, priority)
         task_left.appendChild(svg_radio_unchecked);
         task_left.appendChild(p_title);
+        if (document.querySelector('#menu-list .active').classList.contains('filter')) {
+            const p_proj_title = createDOMElement('p', {class: 'project-link'}, `(${task.project_title})`);
+            task_left.appendChild(p_proj_title);
+        }
         task_right.appendChild(p_priority);
         task_right.appendChild(svg_sq);
         task_right.appendChild(svg_del);

@@ -71,7 +71,7 @@ header#page-head {
     border-radius: 10px;
 }
 
-#menu-list .project.active {
+#menu-list .active {
     background-color: #333333;
 }
 
@@ -231,6 +231,12 @@ li .task-right > * {
 li .task-left p {
     align-self: center;
     pointer-events: none;
+}
+
+li .task-left p.project-link {
+    font-size: 1.1rem !important;
+    color:#cecece; 
+    margin-left: 1rem;
 }
 
 li .task-right p {
