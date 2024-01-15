@@ -10,12 +10,12 @@ export const OverlayView = (() => {
         document.getElementById('submit-btn').textContent = 'Create task';
     }
     function showEditTaskOverlay(li) {
-        const query_res = dataController.readProjectTask(li.data.project_title, li.data.task_title);
+        const query_res = dataController.readProjectTask(li.data.project_title, li.data.task_id);
         document.getElementById('overlay').style.display = "block";
         document.querySelector('#overlay-content form legend').textContent = 'Edit task';
         document.getElementById('submit-btn').textContent = 'Save changes';
         document.querySelector('input#edit-form-proj-title').value = query_res.project_title;
-        document.querySelector('input#unedited-title').value = query_res.title;
+        document.querySelector('input#task-id').value = query_res.id;
         document.querySelector('input#title').value = query_res.title;
         document.querySelector('select#priority').value = query_res.priority;
         document.querySelector('textarea#desc').value = query_res.description;
@@ -38,9 +38,9 @@ export const OverlayView = (() => {
             dataController.createNewTask(project_title, task);
         }   
         else {
-            const unedited_title = formData.get("unedited-title");
+            const task_id = formData.get("task-id");
             const project_title = formData.get("project-title");
-            dataController.editTask(project_title, unedited_title, task);
+            dataController.editTask(project_title, task_id, task);
         }
         form.reset();
     }

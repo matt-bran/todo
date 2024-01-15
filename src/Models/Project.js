@@ -1,41 +1,43 @@
 import { Task } from "./Task";
 
 const Project = (title) => {
+    let task_id_generator = -1;
     const project_title = title;
     var tasks = [];
     // sorted insert by priority
-    const insert = (task) => {
-        let ins_prior = priorityParser(task.priority);
+    const insert = (title, dueDate, priority, description, isComplete=false) => {
+        task_id_generator+=1;
+        let ins_prior = priorityParser(priority);
         let ins_date = new Date(0);
-        if (task.dueDate != "") {
-            const args = task.dueDate.split('-');
+        if (dueDate != "") {
+            const args = dueDate.split('-');
             ins_date = new Date(args[0], parseInt(args[1])-1, args[2]);
         }
         if (tasks.length == 0) {
-            tasks.push(Task(task.title, task.description, ins_date, task.priority, task.isComplete));
+            tasks.push(Task(task_id_generator, title, description, ins_date, priority, isComplete));
             return;
         }
         for (let i = 0; i < tasks.length; i++) {
             let temp_prior = priorityParser(tasks[i].getPriority());
             if (ins_prior > temp_prior) {
-                tasks.splice(i, 0, Task(task.title, task.description, ins_date, task.priority, task.isComplete));
+                tasks.splice(i, 0, Task(task_id_generator, title, description, ins_date, priority, isComplete));
                 return;
             } 
             else {
                 if (i == tasks.length-1) {
-                    tasks.push(Task(task.title, task.description, ins_date, task.priority, task.isComplete));
+                    tasks.push(Task(task_id_generator, title, description, ins_date, priority, isComplete));
                     return;
                 }
                 else if (ins_prior > priorityParser(tasks[i+1].getPriority)) {
-                    tasks.splice(i+1, 0, Task(task.title, task.description, ins_date, task.priority, task.isComplete));
+                    tasks.splice(i+1, 0, Task(task_id_generator, title, description, ins_date, priority, isComplete));
                     return;
                 }
             } 
         }
     };
 
-    const remove = (task_title) => {
-        const index = getElementIndexByTitle(task_title);
+    const remove = (id) => {
+        const index = getElementIndexById(id);
         tasks.splice(index, 1);
     };
 
@@ -53,9 +55,9 @@ const Project = (title) => {
 
     const getElementAt = (index) => tasks[index];
 
-    const getElementIndexByTitle = (target_title) => {
+    const getElementIndexById = (id) => {
         for (let i = 0; i < tasks.length; i++) {
-            if (tasks[i].getTitle() == target_title) {
+            if (tasks[i].getId() == target_id) {
                 return i;
             }
         }
@@ -80,6 +82,6 @@ const Project = (title) => {
     }
 
     return { insert, remove, getTitle, 
-            getElementAt, getElementIndexByTitle, getSize, exportData}
+            getElementAt, getSize, exportData}
 } 
 export { Project }

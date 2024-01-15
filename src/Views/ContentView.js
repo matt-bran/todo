@@ -22,10 +22,10 @@ export const ContentView = (() => {
         }
     }
     function removeTask(taskItem) {
-        dataController.deleteProjectTask(taskItem.data.project_title, taskItem.data.task_title);
+        dataController.deleteProjectTask(taskItem.data.project_title, taskItem.data.task_id);
     }  
     function toggleTaskCompletion(li) {
-        dataController.toggleTask(li.data.project_title, li.data.task_title);
+        dataController.toggleTask(li.data.project_title, li.data.task_id);
         strikeThroughListItem(li);
         let count = 0;
         Array.from(li.parentElement.children).forEach((li) => {
@@ -39,7 +39,7 @@ export const ContentView = (() => {
         const ul_tasks = document.querySelector('ul#tasks');
         Array.from(ul_tasks.children).forEach((li) => {
             if (li.data.isComplete == "true") {
-                dataController.deleteProjectTask(li.data.project_title, li.data.task_title);
+                dataController.deleteProjectTask(li.data.project_title, li.data.task_id);
             }
         });
     }
@@ -98,8 +98,8 @@ export const ContentView = (() => {
         const li_top = li.children.item(0); 
 
         const project_title = li.data.project_title;
-        const task_title = li.data.task_title;
-        const task = dataController.readProjectTask(project_title, task_title);
+        const task_id = li.data.task_id;
+        const task = dataController.readProjectTask(project_title, task_id);
 
         if (task.isComplete) {
             li_top.classList.add('strikethrough');
@@ -143,7 +143,7 @@ export const ContentView = (() => {
         li_top.appendChild(task_right);
         li.appendChild(li_top);
         li.appendChild(desc);
-        li.data = { project_title: task.project_title, task_title: task.title, isComplete: 'false' }
+        li.data = { project_title: task.project_title, task_id: task.id, isComplete: 'false' }
         return li;
     }
     return { refreshTaskContent, toggleTaskDesc, removeTask, toggleTaskCompletion, strikeThroughListItem, 

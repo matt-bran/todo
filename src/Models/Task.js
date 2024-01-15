@@ -1,10 +1,12 @@
-const Task = (newTitle, newDesc, newDate, newPriority, newisComplete) => {
+const Task = (newId, newTitle, newDesc, newDate, newPriority, newisComplete) => {
+    let id = newId;
     let title = newTitle;
     let description = newDesc;
     let dueDate = newDate;
     let priority = newPriority;
     let isComplete = newisComplete;
 
+    const getId = () => id;
     const getTitle = () => title;
     const getDescription = () => description; 
     const getDueDate = () => dueDate;
@@ -17,7 +19,7 @@ const Task = (newTitle, newDesc, newDate, newPriority, newisComplete) => {
     const setPriority = (newPriority) => { priority = newPriority }; 
     const toggleisComplete = () => { isComplete = !isComplete; };
     
-    return { getTitle, getDescription, getDueDate, getPriority, setTitle, 
+    return { getId, getTitle, getDescription, getDueDate, getPriority, setTitle, 
              setDescription, setDueDate, setPriority, getisComplete, toggleisComplete }
 };
 export { Task }

@@ -35,15 +35,19 @@ const dataController = (() => {
     }
     function createNewTask(project_title, task) {
         const project = ProjectsContainer.getProject(project_title);
-        project.insert(task)
+        if (task.isComplete != null) {
+            project.insert(task.title, task.dueDate, task.priority, task.description, task.isComplete);
+        } else {
+            project.insert(task.title, task.dueDate, task.priority, task.description)
+        }
         writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
     }
 
-    function editTask(project_title, task_title, edits) {
+    function editTask(project_title, task_id, edits) {
         const project = ProjectsContainer.getProject(project_title);
         for (let i=0; i < project.getSize(); i++) {
             const curr_task = project.getElementAt(i);
-            if (task_title == curr_task.getTitle()) {
+            if (task_id == curr_task.getId()) {
                 project.getElementAt(i).setTitle(edits.title);
                 project.getElementAt(i).setPriority(edits.priority);
                 project.getElementAt(i).setDescription(edits.description);
@@ -64,6 +68,7 @@ const dataController = (() => {
         for (let i = 0; i < project.getSize(); i++) {
             const task = project.getElementAt(i);
             let task_contents = {
+                id: task.getId(),
                 title: task.getTitle(),
                 dueDate: task.getDueDate(),
                 priority: task.getPriority(),
@@ -75,38 +80,39 @@ const dataController = (() => {
         }
         return query;
     }
-    function readProjectTask(project_title, task_title) {
+    function readProjectTask(project_title, task_id) {
         const project = ProjectsContainer.getProject(project_title);
         for (let i=0; i < project.getSize(); i++) {
             const curr_task = project.getElementAt(i);
-            if (task_title == curr_task.getTitle()) {
-                return { title: curr_task.getTitle(), 
-                         dueDate: curr_task.getDueDate(), 
-                         priority: curr_task.getPriority(),
-                         description: curr_task.getDescription(),
-                         isComplete: curr_task.getisComplete(),
-                         project_title: project_title
+            if (task_id == curr_task.getId()) {
+                return {id: curr_task.getId(), 
+                        title: curr_task.getTitle(), 
+                        dueDate: curr_task.getDueDate(), 
+                        priority: curr_task.getPriority(),
+                        description: curr_task.getDescription(),
+                        isComplete: curr_task.getisComplete(),
+                        project_title: project_title
                         }
             }
         }
     }
-    function deleteProjectTask(project_title, task_title) {
+    function deleteProjectTask(project_title, task_id) {
         const project = ProjectsContainer.getProject(project_title);
         for (let i=0; i < project.getSize(); i++) {
             const curr_task = project.getElementAt(i);
-            if (task_title == curr_task.getTitle()) {
-                project.remove(task_title);
+            if (task_id == curr_task.getId()) {
+                project.remove(task_id);
                 writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
                 return true;
             }
         }
         return false;
     }
-    function toggleTask(project_title, task_title) {
+    function toggleTask(project_title, task_id) {
         const project = ProjectsContainer.getProject(project_title);
         for (let i=0; i < project.getSize(); i++) {
             const curr_task = project.getElementAt(i);
-            if (task_title == curr_task.getTitle()) {
+            if (task_id == curr_task.getId()) {
                 curr_task.toggleisComplete();
                 writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
                 return true;
@@ -118,8 +124,8 @@ const dataController = (() => {
         const project = ProjectsContainer.getProject(project_title);
         for (let i=project.getSize()-1; i >= 0; i--) {
             if (project.getElementAt(i).getisComplete()) {
-                const title = project.getElementAt(i).getTitle();
-                project.remove(title);
+                const id = project.getElementAt(i).getId();
+                project.remove(id);
                 writeToStorage(project_title, ProjectsContainer.getProject(project_title).exportData());
             }
         }
@@ -144,6 +150,7 @@ const dataController = (() => {
                 if (isToday(task.getDueDate())) {
                     ret.push({
                         project_title: project.getTitle(),
+                        id: task.getId(),
                         title: task.getTitle(),
                         dueDate: task.getDueDate(),
                         priority: task.getPriority(), 
@@ -166,6 +173,7 @@ const dataController = (() => {
                 if (task_date >= startOfToday().getTime() && task_date <= add(Date.now(), {weeks: 1}).getTime()) {
                     ret.push({
                         project_title: project.getTitle(),
+                        id: task.getId(),
                         title: task.getTitle(),
                         dueDate: task.getDueDate(),
                         priority: task.getPriority(), 
@@ -187,6 +195,7 @@ const dataController = (() => {
                 if (isComplete == task.getisComplete()) {
                     ret.push({
                         project_title: project.getTitle(),
+                        id: task.getId(), 
                         title: task.getTitle(),
                         dueDate: task.getDueDate(),
                         priority: task.getPriority(), 
@@ -208,6 +217,7 @@ const dataController = (() => {
                 if (priority == task.getPriority()) {
                     ret.push({
                         project_title: project.getTitle(),
+                        id: task.getId(),
                         title: task.getTitle(),
                         dueDate: task.getDueDate(),
                         priority: task.getPriority(), 
