@@ -46,7 +46,7 @@ const dataController = (() => {
             if (task_title == curr_task.getTitle()) {
                 project.getElementAt(i).setTitle(edits.title);
                 project.getElementAt(i).setPriority(edits.priority);
-                project.getElementAt(i).setDescription(edits.desc);
+                project.getElementAt(i).setDescription(edits.description);
                 if (edits.dueDate == "") {
                     project.getElementAt(i).setDueDate(new Date(0));
                 } else {
