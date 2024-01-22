@@ -1,6 +1,6 @@
 # Task Manager
 
-A lightweight web application that allows intuitive task management that allows users to streamline daily work flow.
+A lightweight web application which produces intuitive task management that allows users to streamline daily work flow.
 
 # Technologies Used
 - Javascript
