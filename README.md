@@ -1,5 +1,6 @@
 # Task Manager
-(./demoV3.gif)
+![](./demoV3.gif)
+
 A lightweight web application which produces intuitive task management that allows users to streamline daily work flow.
 
 # Technologies Used
