@@ -6,6 +6,9 @@ import { isEqual } from "date-fns";
 /* Responsible for all DOM manipulation that occurs in the content area of the webpage */
 
 export const ContentView = (() => {
+    function hideView() {
+        document.getElementById('list-content').classList.add('hidden');
+    }
     function toggleTaskDesc(item) {
         const btm_desc = item.children.item(1);
         if (btm_desc.textContent == "") {
@@ -77,8 +80,8 @@ export const ContentView = (() => {
         else if (active_tab.classList.contains('project')) {
             document.getElementById('add-task').classList.remove('hidden');
             document.getElementById('content-btns').style.justifyContent = "space-between";
-            document.getElementById('content-header-title').textContent = active_tab.textContent;
-            const project_title = document.querySelector('#menu-list .active.project').textContent; 
+            document.getElementById('content-header-title').textContent = active_tab.children.item(0).textContent;
+            const project_title = document.querySelector('.active.project p').textContent; 
             res = dataController.readProjectAllTasks(project_title);
         }
         const ul_tasks = document.getElementById('tasks');
@@ -151,5 +154,5 @@ export const ContentView = (() => {
         return li;
     }
     return { refreshTaskContent, toggleTaskDesc, removeTask, toggleTaskCompletion, strikeThroughListItem, 
-            clearCompletedTasks}
+            clearCompletedTasks, hideView }
 })();

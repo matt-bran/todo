@@ -21,7 +21,11 @@ export const menuEventHandlers = {
     },
     handleClickTab: () => {
         document.getElementById('menu').addEventListener('click', (e) => {
-            if (e.target.matches('.project')) {
+            if (e.target.matches('.project span')){
+                MenuView.removeProject(e.target);
+                ContentView.hideView();
+            }
+            else if (e.target.matches('.project')) {
                 MenuView.updateActiveTab(e.target);
                 ContentView.refreshTaskContent();
             } 

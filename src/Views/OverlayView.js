@@ -34,7 +34,7 @@ export const OverlayView = (() => {
         const input_desc = formData.get("desc");
         const task = { title: input_title, dueDate: input_date, priority: input_priority, description: input_desc };
         if (document.querySelector('#overlay-content form legend').textContent == 'New task') {
-            const project_title = document.querySelector('.active').textContent;
+            const project_title = document.querySelector('.active.project p').textContent;
             dataController.createNewTask(project_title, task);
         }   
         else {

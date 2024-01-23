@@ -1,6 +1,6 @@
 import { add, isToday, startOfToday } from 'date-fns';
 import { ProjectsContainer } from './Models/ProjectsContainer.js'
-import { loadStorage, writeToStorage } from './utils.js';
+import { loadStorage, removeFromStorage, writeToStorage } from './utils.js';
 
 const dataController = (() => {
 
@@ -26,6 +26,12 @@ const dataController = (() => {
         ProjectsContainer.createProject(title);
         writeToStorage(title, ProjectsContainer.getProject(title).exportData());
     }
+
+    function removeProject(title) {
+        ProjectsContainer.remove(title);
+        removeFromStorage(title);
+    }
+
     function readAllProjectTitles() {
         let res = [];
         for (let i = 0; i < ProjectsContainer.getSize(); i++) {
@@ -234,7 +240,7 @@ const dataController = (() => {
             readProjectAllTasks, readProjectTask, deleteProjectTask, 
             toggleTask, queryCompleteCount, deleteProjectCompleteTasks,
             queryAllTasksByCompletion, queryAllTasksByPriority, queryAllTasksToday, 
-            queryAllTasksWeek, importProjects, readAllProjectTitles }
+            queryAllTasksWeek, importProjects, readAllProjectTitles, removeProject }
 })();
 
 export { dataController }

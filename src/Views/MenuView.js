@@ -14,11 +14,20 @@ export const MenuView = (() => {
         document.getElementById('error').classList.add('hidden');
 
     }
-    function renderProjectsList(form) {
+    function removeProject(e) {
+        const title = e.previousSibling;
+        dataController.removeProject(title.textContent);
+        renderProjectsList();
+    }
+    function renderProjectsList() {
         document.querySelectorAll('li.project').forEach((proj) => proj.remove());
         const query = dataController.readAllProjectTitles();
         for (let i = 0; i < query.length; i++) {
-            const menu_li = createDOMElement('li', {class: 'project tab'}, query[i]);
+            const title = createDOMElement('p', {}, query[i]);
+            const svg = createDOMElement('span', { class: "material-symbols-outlined close"}, 'close');
+            const menu_li = createDOMElement('li', {class: 'project tab'});
+            menu_li.appendChild(title);
+            menu_li.append(svg);
             document.getElementById('menu-list').append(menu_li);
         }
     }
@@ -28,12 +37,11 @@ export const MenuView = (() => {
         const projs = document.querySelectorAll('li.project');
         let isExists = false;
         for (let i = 0; i < projs.length; i++) {
-            if (projs.item(i).textContent == project_title) {
+            if (projs.item(i).children.item(0).textContent == project_title) {
                 isExists = true;
                 break;
             }
         }
-
         if (!isExists) {
             dataController.createNewProject(project_title);
             hideAddListForm();
@@ -57,5 +65,5 @@ export const MenuView = (() => {
         Array.from(menu_list.children).forEach((node) => node.classList.remove('active'));
         li.classList.add('active'); 
     }
-    return { showAddListForm, hideAddListForm, renderProjectsList, SubmitNewProjectForm, updateActiveTab }
+    return { showAddListForm, hideAddListForm, renderProjectsList, SubmitNewProjectForm, updateActiveTab, removeProject }
 })();
